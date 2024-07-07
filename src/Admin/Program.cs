@@ -2,12 +2,11 @@ using Application.Services;
 using Core;
 using Infrastructure;
 using Infrastructure.Identity;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Web
+namespace Admin
 {
     public class Program
     {
@@ -28,7 +27,6 @@ namespace Web
 
             var app = builder.Build();
             await app.Services.MigrateDatabaseAsync();
-
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();

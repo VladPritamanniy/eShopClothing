@@ -4,12 +4,12 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-Web-21e477f2-117a-4842-aae9-defcd28cb929</UserSecretsId>
+    <UserSecretsId>aspnet-Admin-440a4f51-48a3-4ce3-88c0-88197c697c45</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mandrill.net" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.19" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.19" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.19" />
