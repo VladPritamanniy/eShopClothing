@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Identity;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -20,23 +19,16 @@ namespace Infrastructure
                 options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
         }
 
-        public static void AddAuth(this IServiceCollection service)
+        public static void AddIdentity(this WebApplicationBuilder builder)
         {
-            service.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.Cookie.HttpOnly = true;
-                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                    options.Cookie.SameSite = SameSiteMode.Lax;
-                });
-        }
-
-        public static void AddIdentity(this IServiceCollection service)
-        {
-            service.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
-                    options.Lockout.AllowedForNewUsers = true;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequiredLength = 8;
                 })
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
