@@ -11,17 +11,23 @@ namespace Web
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
             builder.AddDbContexts();
 
-            builder.Services.AddAuthentication();
+            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = builder.Configuration["GoogleAuthorization:client_id"];
+                googleOptions.ClientSecret = builder.Configuration["GoogleAuthorization:client_secret"];
+                googleOptions.CallbackPath = builder.Configuration["GoogleAuthorization:callback_path"];
+            });
+
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("UserPolicy", policy =>
                     policy.RequireClaim("Role", "User", "Admin"));
             });
-            builder.AddIdentity();
 
+            builder.AddIdentity();
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddRazorPages();
 
