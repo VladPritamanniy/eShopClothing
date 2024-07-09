@@ -23,8 +23,6 @@ namespace Admin.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
         public string ReturnUrl { get; set; }
 
         public string ErrorMessage { get; set; }
@@ -38,9 +36,6 @@ namespace Admin.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
-
-            [Display(Name = "Remember me?")]
-            public bool RememberMe { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -54,47 +49,40 @@ namespace Admin.Areas.Identity.Pages.Account
 
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             ReturnUrl = returnUrl;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                var user = await _userManager.FindByNameAsync(Input.Email);
-                if (result.Succeeded)
+                returnUrl ??= Url.Content("~/");
+
+                if (await CanSignIn())
                 {
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                if (user!=null && !await _userManager.IsEmailConfirmedAsync(user))
-                {
-                    ModelState.AddModelError(string.Empty, "Email not confirmed. Confirm your email.");
-                    return Page();
-                }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
-
             }
 
             return Page();
+        }
+
+        private async Task<bool> CanSignIn()
+        {
+            var user = await _userManager.FindByNameAsync(Input.Email);
+            if (user != null && await _userManager.IsInRoleAsync(user!, "Admin"))
+            {
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
