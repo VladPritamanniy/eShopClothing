@@ -3,6 +3,8 @@ using Core;
 using Infrastructure;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web
 {
@@ -16,8 +18,8 @@ namespace Web
 
             builder.Services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = builder.Configuration["GoogleAuthorization:client_id"];
-                googleOptions.ClientSecret = builder.Configuration["GoogleAuthorization:client_secret"];
+                googleOptions.ClientId = builder.Configuration["GoogleAuthorization:client_id"]!;
+                googleOptions.ClientSecret = builder.Configuration["GoogleAuthorization:client_secret"]!;
                 googleOptions.CallbackPath = builder.Configuration["GoogleAuthorization:callback_path"];
             });
 
