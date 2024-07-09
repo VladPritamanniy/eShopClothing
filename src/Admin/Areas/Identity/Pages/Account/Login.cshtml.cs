@@ -27,7 +27,6 @@ namespace Admin.Areas.Identity.Pages.Account
 
         public string ReturnUrl { get; set; }
 
-        [TempData]
         public string ErrorMessage { get; set; }
 
         public class InputModel
@@ -36,6 +35,7 @@ namespace Admin.Areas.Identity.Pages.Account
             [EmailAddress]
             public string Email { get; set; }
 
+            [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -83,7 +83,7 @@ namespace Admin.Areas.Identity.Pages.Account
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
-                if (user != null && !await _userManager.IsEmailConfirmedAsync(user))
+                if (user!=null && !await _userManager.IsEmailConfirmedAsync(user))
                 {
                     ModelState.AddModelError(string.Empty, "Email not confirmed. Confirm your email.");
                     return Page();

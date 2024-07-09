@@ -20,8 +20,8 @@ namespace Admin
                 options.AddPolicy("AdminPolicy", policy =>
                     policy.RequireClaim("Role", "Admin"));
             });
-            builder.AddIdentity();
 
+            builder.AddIdentity();
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddRazorPages();
 
@@ -45,8 +45,8 @@ namespace Admin
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapRazorPages();
 
