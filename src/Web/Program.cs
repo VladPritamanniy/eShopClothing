@@ -33,6 +33,7 @@ namespace Web
 
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection(nameof(AuthMessageSenderOptions)));
+            builder.Services.Configure<LoginOptions>(builder.Configuration.GetSection(nameof(LoginOptions)));
 
             var app = builder.Build();
             await app.Services.MigrateDatabaseAsync();

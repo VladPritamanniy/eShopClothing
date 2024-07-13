@@ -22,10 +22,10 @@ namespace Application.Services
 
         public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
-            await Execute(subject, message, toEmail);
+            await Execute(toEmail, subject, message);
         }
 
-        public async Task Execute(string subject, string message, string toEmail)
+        public async Task Execute(string toEmail, string subject, string message)
         {
             MailAddress fromAddress = new MailAddress(Options.FromEmail!, Options.FromDisplayName);
             MailAddress toAddress = new MailAddress(toEmail);
@@ -45,6 +45,7 @@ namespace Application.Services
 
                     try
                     {
+                        _logger.LogInformation("Start sending email.");
                         await smtpClient.SendMailAsync(letter);
                         _logger.LogInformation("Send confirm letter to {toEmail} is succeed", toEmail);
                     }

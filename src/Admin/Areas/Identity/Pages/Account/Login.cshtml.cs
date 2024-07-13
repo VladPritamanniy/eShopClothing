@@ -74,9 +74,9 @@ namespace Admin.Areas.Identity.Pages.Account
         private async Task<bool> CanSignIn()
         {
             var user = await _userManager.FindByNameAsync(Input.Email);
-            if (user != null && await _userManager.IsInRoleAsync(user!, "Admin"))
+            if (user != null && await _userManager.IsInRoleAsync(user, "Admin"))
             {
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, false, true);
                 if (result.Succeeded)
                 {
                     return true;
