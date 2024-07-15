@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Infrastructure.Identity;
-using Core;
 using Microsoft.Extensions.Options;
+using Core.Options;
 
 namespace Web.Areas.Identity.Pages.Account
 {

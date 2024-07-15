@@ -1,5 +1,5 @@
 using Application.Services;
-using Core;
+using Core.Options;
 using Infrastructure;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;

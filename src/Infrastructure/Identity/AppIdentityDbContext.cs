@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Identity
@@ -9,5 +10,11 @@ namespace Infrastructure.Identity
             : base(options)
         {
         }
+
+        DbSet<Clothing> Clothing { get; set; }
+
+        DbSet<Core.Entities.Type> Type { get; set; }
+
+        DbSet<Size> Size { get; set; }
     }
 }

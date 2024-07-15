@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,9 +11,6 @@ namespace Infrastructure
     {
         public static void AddDbContexts(this WebApplicationBuilder builder)
         {
-            //builder.Services.AddDbContext<AppDbContext>(options =>
-            //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Infrastructure.Data")));
-
             builder.Services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
         }

@@ -1,4 +1,4 @@
-﻿namespace Core;
+﻿namespace Core.Options;
 
 public class AuthMessageSenderOptions
 {

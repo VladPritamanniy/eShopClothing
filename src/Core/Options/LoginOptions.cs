@@ -1,4 +1,4 @@
-﻿namespace Core
+﻿namespace Core.Options
 {
     public class LoginOptions
     {
@@ -6,4 +6,3 @@
         public int BlockingInMinutes { get; set; }
     }
 }
- 
