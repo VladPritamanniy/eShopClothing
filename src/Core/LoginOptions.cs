@@ -2,6 +2,8 @@
 {
     public class LoginOptions
     {
-        public int LoginAttempts { get; set; }
+        public int MaxFailedAccessAttempts { get; set; }
+        public int BlockingInMinutes { get; set; }
     }
 }
+ 

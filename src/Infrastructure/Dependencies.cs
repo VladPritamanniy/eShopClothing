@@ -30,8 +30,8 @@ namespace Infrastructure
                     options.Password.RequireNonAlphanumeric = true;
                     options.Password.RequiredLength = 8;
                     options.Lockout.AllowedForNewUsers = true;
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(Double.Parse(builder.Configuration["LoginOptions:BlockingInMinutes"]!));
+                    options.Lockout.MaxFailedAccessAttempts = Int32.Parse(builder.Configuration["LoginOptions:MaxFailedAccessAttempts"]!);
                 })
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()

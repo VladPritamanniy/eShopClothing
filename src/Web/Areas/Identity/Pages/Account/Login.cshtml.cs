@@ -46,10 +46,6 @@ namespace Web.Areas.Identity.Pages.Account
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
-
-            public int LoginAttempt { get; set; }
-
-            public int LoginAttemptLeft { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -118,27 +114,28 @@ namespace Web.Areas.Identity.Pages.Account
 
         private void SetLoginAttemptToCookie()
         {
-            if (HttpContext.Request.Cookies.ContainsKey(nameof(Input.LoginAttempt)))
+            int loginAttempt = 1;
+            int loginAttemptsLeft;
+
+            if (HttpContext.Request.Cookies.ContainsKey(nameof(Options.MaxFailedAccessAttempts)))
             {
-                var loginAttemptFromCookie = Request.Cookies[nameof(Input.LoginAttempt)];
-                Input.LoginAttempt = Int32.Parse(loginAttemptFromCookie!) + 1;
-                Input.LoginAttemptLeft = Options.LoginAttempts - Input.LoginAttempt;
+                int loginAttemptFromCookie = Int32.Parse(Request.Cookies[nameof(Options.MaxFailedAccessAttempts)]!);
+                loginAttemptsLeft = loginAttemptFromCookie - loginAttempt;
             }
             else
             {
-                Input.LoginAttempt++;
-                Input.LoginAttemptLeft = Options.LoginAttempts - Input.LoginAttempt;
+                loginAttemptsLeft = Options.MaxFailedAccessAttempts - loginAttempt;
             }
 
-            Response.Cookies.Append(nameof(Input.LoginAttempt), Input.LoginAttempt.ToString());
-            ModelState.AddModelError(string.Empty, $"Invalid login attempt. Attempts left: {Input.LoginAttemptLeft}.");
+            Response.Cookies.Append(nameof(Options.MaxFailedAccessAttempts), loginAttemptsLeft.ToString());
+            ModelState.AddModelError(string.Empty, $"Invalid login attempt. Attempts left: {loginAttemptsLeft}.");
         }
 
         private void DeleteLoginAttemptsFromCookie()
         {
-            if (HttpContext.Request.Cookies.ContainsKey(nameof(Input.LoginAttempt)))
+            if (HttpContext.Request.Cookies.ContainsKey(nameof(Options.MaxFailedAccessAttempts)))
             {
-                HttpContext.Response.Cookies.Delete(nameof(Input.LoginAttempt));
+                HttpContext.Response.Cookies.Delete(nameof(Options.MaxFailedAccessAttempts));
             }
         }
     }
