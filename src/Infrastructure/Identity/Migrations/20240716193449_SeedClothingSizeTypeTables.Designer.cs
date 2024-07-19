@@ -4,6 +4,7 @@ using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240716193449_SeedClothingSizeTypeTables")]
+    partial class SeedClothingSizeTypeTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,33 +66,9 @@ namespace Infrastructure.Identity.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("SizeId");
-
                     b.HasIndex("TypeId");
 
                     b.ToTable("Clothing");
-                });
-
-            modelBuilder.Entity("Core.Entities.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClothingId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Value")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClothingId");
-
-                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("Core.Entities.Size", b =>
@@ -100,11 +79,16 @@ namespace Infrastructure.Identity.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ClothingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClothingId");
 
                     b.ToTable("Size");
                 });
@@ -330,27 +314,19 @@ namespace Infrastructure.Identity.Migrations
                         .WithMany("Clothing")
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("Core.Entities.Size", "Size")
-                        .WithMany()
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Core.Entities.Type", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Size");
-
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Core.Entities.Image", b =>
+            modelBuilder.Entity("Core.Entities.Size", b =>
                 {
                     b.HasOne("Core.Entities.Clothing", null)
-                        .WithMany("Images")
+                        .WithMany("Size")
                         .HasForeignKey("ClothingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -409,7 +385,7 @@ namespace Infrastructure.Identity.Migrations
 
             modelBuilder.Entity("Core.Entities.Clothing", b =>
                 {
-                    b.Navigation("Images");
+                    b.Navigation("Size");
                 });
 
             modelBuilder.Entity("Infrastructure.Identity.ApplicationUser", b =>

@@ -1,8 +1,15 @@
+using Application.Interfaces;
+using Application.Mapper;
 using Application.Services;
+using Core.Entities;
 using Core.Options;
+using Core.Repositories;
+using Core.Specification.Base;
 using Infrastructure;
 using Infrastructure.Identity;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Web.Mapper;
 
 namespace Web
 {
@@ -30,8 +37,19 @@ namespace Web
             builder.AddIdentity();
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddRazorPages();
+            builder.Services.Configure<RouteOptions>(options =>
+            {
+                options.AppendTrailingSlash = false;
+                options.LowercaseUrls = true;
+                options.LowercaseQueryStrings = true;
+            });
 
+            builder.Services.AddAutoMapper(typeof(ViewModelProfile));
+            builder.Services.AddAutoMapper(typeof(DtoProfile));
             builder.Services.AddTransient<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<IClothingService, ClothingService>();
+            builder.Services.AddScoped<IClothingRepository, ClothingRepository>();
+            builder.Services.AddScoped<IQueryBuilder<Clothing>, EfCoreQueryBuilder<Clothing>>();
             builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection(nameof(AuthMessageSenderOptions)));
             builder.Services.Configure<LoginOptions>(builder.Configuration.GetSection(nameof(LoginOptions)));
 

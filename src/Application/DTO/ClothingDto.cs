@@ -1,8 +1,8 @@
-﻿using Core.Entities.Base;
+﻿using Application.DTO.Base;
 
-namespace Core.Entities
+namespace Application.DTO
 {
-    public class Clothing : BaseEntity
+    public class ClothingDto : BaseDto
     {
         public string Name { get; set; }
         public string Descriprion { get; set; }
@@ -12,9 +12,8 @@ namespace Core.Entities
         public int? OldPrice { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? DayOfSold { get; set; }
-        public string ApplicationUserId { get; set; }
-        public HashSet<Image> Images { get; set; }
-        public Size Size { get; set; }
-        public Type Type { get; set; }
+        public HashSet<ImageDto> Images { get; set; }
+        public SizeDto Size { get; set; }
+        public TypeDto Type { get; set; }
     }
 }

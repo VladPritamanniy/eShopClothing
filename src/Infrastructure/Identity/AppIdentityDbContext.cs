@@ -11,10 +11,10 @@ namespace Infrastructure.Identity
         {
         }
 
-        DbSet<Clothing> Clothing { get; set; }
+        public DbSet<Clothing> Clothing { get; set; }
 
-        DbSet<Core.Entities.Type> Type { get; set; }
+        public DbSet<Core.Entities.Type> Type { get; set; }
 
-        DbSet<Size> Size { get; set; }
+        public DbSet<Size> Size { get; set; }
     }
 }
