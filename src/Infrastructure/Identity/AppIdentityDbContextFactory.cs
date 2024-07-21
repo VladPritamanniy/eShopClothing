@@ -16,7 +16,7 @@ namespace Infrastructure.Identity
                 .Build();
 
             var connectionString = configuration.GetConnectionString("IdentityConnection");
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseNpgsql(connectionString);
 
             return new AppIdentityDbContext(optionsBuilder.Options);
         }

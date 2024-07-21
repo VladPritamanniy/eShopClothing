@@ -12,7 +12,7 @@ namespace Infrastructure
         public static void AddDbContexts(this WebApplicationBuilder builder)
         {
             builder.Services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+                options.UseNpgsql(builder.Configuration.GetConnectionString("IdentityConnection")));
         }
 
         public static void AddIdentity(this WebApplicationBuilder builder)
