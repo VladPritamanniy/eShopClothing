@@ -87,3 +87,52 @@ body {
         background-color: aliceblue;
     }
 }
+
+#divForUploadImages {
+    display: grid;
+    grid-template-columns: 24% 24% 24% 24%;
+    gap: 1%;
+}
+
+.form-file-image {
+    display: block;
+    border-radius: 30px;
+    padding: 4px;
+    background-color: aliceblue;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.drop-container {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px dashed #555;
+    color: #444;
+    cursor: pointer;
+    transition: background .2s ease-in-out, border .2s ease-in-out;
+}
+
+.drop-container:hover {
+    background: #eee;
+    border-color: #111;
+}
+
+.drop-container:hover .drop-title {
+    color: #222;
+}
+
+.drop-title {
+    color: #444;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    transition: color .2s ease-in-out;
+}

@@ -4,6 +4,6 @@ namespace Application.Interfaces
 {
     public interface IClothingService
     {
-        Task<IEnumerable<ClothingDto>> GetAllUserProductByUserIdListAsync(string id);
+        Task<IEnumerable<ClothingDto>> GetAllUserProductByUserId(string id);
     }
 }

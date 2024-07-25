@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Core.Entities.Base;
 
-namespace Core.Specification.Base
+namespace Core.Specifications.Base
 {
     public abstract class Specification<TEntity>
         where TEntity : BaseEntity
@@ -10,9 +10,9 @@ namespace Core.Specification.Base
         {
         }
 
-        public Specification(Expression<Func<TEntity, bool>> creteria)
+        public Specification(Expression<Func<TEntity, bool>> criteria)
         {
-            Criteria = creteria;
+            Criteria = criteria;
         }
 
         public Expression<Func<TEntity, bool>>? Criteria { get; }

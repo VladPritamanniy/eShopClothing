@@ -2,7 +2,6 @@
 using Application.Interfaces;
 using AutoMapper;
 using Core.Repositories;
-using Core.Specification;
 
 namespace Application.Services
 {
@@ -17,10 +16,9 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ClothingDto>> GetAllUserProductByUserIdListAsync(string id)
+        public async Task<IEnumerable<ClothingDto>> GetAllUserProductByUserId(string id)
         {
-            var spec = new GetClothingListByUserIdSpecification(id);
-            var list = await _productRepository.GetById(id, spec);
+            var list = await _productRepository.GetAllUserProductByUserId(id);
             var mapped = _mapper.Map<IEnumerable<ClothingDto>>(list);
             return mapped;
         }

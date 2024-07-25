@@ -1,7 +1,7 @@
 ﻿using Core.Entities;
-using Core.Specification.Base;
+using Core.Specifications.Base;
 
-namespace Core.Specification
+namespace Core.Specifications
 {
     public class GetClothingListByUserIdSpecification : Specification<Clothing>
     {

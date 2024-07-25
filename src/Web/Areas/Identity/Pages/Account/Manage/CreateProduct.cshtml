@@ -1,0 +1,80 @@
+﻿@page
+@model CreateProductModel
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Product.FormFiles" class="drop-container" id="dropcontainer">
+            <span class="drop-title">Drop files here</span>
+            or
+            <input asp-for="Product.FormFiles" type="file" multiple accept="image/png, image/jpeg, image/jpg" id="fileInput">
+        </label>
+        <span asp-validation-for="Product.FormFiles" class="text-danger"></span>
+    </div>
+    <div id="divForUploadImages"></div>
+    <div class="form-group">
+        <label asp-for="Product.Name" class="control-label"></label>
+        <input asp-for="Product.Name" class="form-control" />
+        <span asp-validation-for="Product.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Descriprion" class="control-label"></label>
+        <input asp-for="Product.Descriprion" class="form-control" />
+        <span asp-validation-for="Product.Descriprion" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.ValidPrice" class="control-label"></label>
+        <input asp-for="Product.ValidPrice" class="form-control" />
+        <span asp-validation-for="Product.ValidPrice" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.TypeId" class="form-label"></label>
+        <select asp-for="Product.TypeId" class="form-control" asp-items="ViewBag.TypeId">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="Product.TypeId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.SizeId" class="control-label"></label>
+        <select asp-for="Product.SizeId" class="form-control" asp-items="ViewBag.SizeId">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="Product.SizeId" class="text-danger"></span>
+    </div>
+    <div>
+        <button id="create-product" type="submit" class="w-100 btn btn-lg btn-primary">Create</button>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<script>
+    let fileInput = document.getElementById('fileInput');
+    let divForUploadImages = document.getElementById('divForUploadImages');
+
+    function addFormFileImages() {
+        divForUploadImages.innerHTML = "";
+        for (let i = 0; i < fileInput.files.length; i++) {
+            let file = fileInput.files[i];
+            if (file) {
+                let img = document.createElement("img");
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    img.className = "form-file-image";
+                    img.src = e.target.result;
+                    divForUploadImages.append(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
+    window.addEventListener('pageshow', function() {
+        addFormFileImages();
+    });
+
+    document.getElementById('fileInput').onchange = function () {
+        addFormFileImages();
+    };
+
+</script>

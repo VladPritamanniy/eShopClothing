@@ -1,0 +1,34 @@
+services:
+  # web:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:8080"
+  #     - "8081:8081"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings__Postgres=User ID=postgres;Password=Qjf39JK2Njuw194;Server=database;Port=5432;Database=eShopClothingIdentity;Pooling=true;
+  #     - Redis__Connection=redis:6379
+  #   depends_on:
+  #     - database
+  #     - redis
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+
+#   database:
+#     image: "postgres:latest"
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: Qjf39JK2Njuw194
+#       POSTGRES_DB: eShopClothingIdentity
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:

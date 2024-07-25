@@ -1,63 +1,127 @@
 ﻿html {
-  font-size: 14px; }
+  font-size: 14px;
+}
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px; } }
-
+    font-size: 16px;
+  }
+}
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb; }
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
 
 footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; }
+  line-height: 60px;
+}
 
 html {
   position: relative;
-  min-height: 100%; }
+  min-height: 100%;
+}
 
 body {
-  margin-bottom: 60px; }
+  margin-bottom: 60px;
+}
 
 .login {
   display: flex;
-  justify-content: center; }
-  .login div section #external-account {
-    display: flex;
-    justify-content: center; }
-  .login div section form h2 {
-    display: block;
-    font-size: 39px;
-    text-align: center;
-    font-weight: 800; }
-  .login div section form .list-group {
-    display: flex;
-    align-items: center; }
-    .login div section form .list-group a {
-      border: 1px solid grey;
-      border-radius: 3px;
-      padding: 5px 10px 5px 10px;
-      background-color: white;
-      text-decoration: none;
-      color: black;
-      margin-bottom: 16px; }
-      .login div section form .list-group a:hover {
-        background-color: aliceblue; }
-  .login div section form .login-additional {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0px 20px 0px;
-    font-size: 19px;
-    text-align: center;
-    font-weight: 600; }
+  justify-content: center;
+}
+.login div section #external-account {
+  display: flex;
+  justify-content: center;
+}
+.login div section form h2 {
+  display: block;
+  font-size: 39px;
+  text-align: center;
+  font-weight: 800;
+}
+.login div section form .list-group {
+  display: flex;
+  align-items: center;
+}
+.login div section form .list-group a {
+  border: 1px solid grey;
+  border-radius: 3px;
+  padding: 5px 10px 5px 10px;
+  background-color: white;
+  text-decoration: none;
+  color: black;
+  margin-bottom: 16px;
+}
+.login div section form .list-group a:hover {
+  background-color: aliceblue;
+}
+.login div section form .login-additional {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0px 20px 0px;
+  font-size: 19px;
+  text-align: center;
+  font-weight: 600;
+}
 
 .oauth-btn {
   border: 1px solid grey;
   border-radius: 3px;
   padding: 5px 10px 5px 10px;
-  background-color: white; }
-  .oauth-btn:hover {
-    background-color: aliceblue; }
+  background-color: white;
+}
+.oauth-btn:hover {
+  background-color: aliceblue;
+}
+
+#divForUploadImages {
+  display: grid;
+  grid-template-columns: 24% 24% 24% 24%;
+  gap: 1%;
+}
+
+.form-file-image {
+  display: block;
+  border-radius: 30px;
+  padding: 4px;
+  background-color: aliceblue;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.drop-container {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px dashed #555;
+  color: #444;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+.drop-container:hover {
+  background: #eee;
+  border-color: #111;
+}
+
+.drop-container:hover .drop-title {
+  color: #222;
+}
+
+.drop-title {
+  color: #444;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  transition: color 0.2s ease-in-out;
+}

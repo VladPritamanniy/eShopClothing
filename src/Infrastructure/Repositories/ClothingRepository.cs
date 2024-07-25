@@ -1,25 +1,24 @@
 ﻿using Core.Entities;
 using Core.Repositories;
 using Infrastructure.Identity;
-using Microsoft.EntityFrameworkCore;
-using Core.Specification.Base;
+using Core.Specifications.Base;
+using Infrastructure.Repositories.Base;
+using Core.Specifications;
 
 namespace Infrastructure.Repositories
 {
-    public class ClothingRepository : IClothingRepository
+    public class ClothingRepository : Repository<Clothing>, IClothingRepository
     {
-        private AppIdentityDbContext _context;
-        private readonly IQueryBuilder<Clothing> _queryBuilder;
 
-        public ClothingRepository(AppIdentityDbContext context, IQueryBuilder<Clothing> queryBuilder)
+        public ClothingRepository(AppIdentityDbContext dbContext, IQueryBuilder<Clothing> queryBuilder) : base(dbContext, queryBuilder)
         {
-            _context = context;
-            _queryBuilder = queryBuilder;
         }
 
-        public async Task<List<Clothing>> GetById(string id, Specification<Clothing> specification)
+        public async Task<IEnumerable<Clothing>> GetAllUserProductByUserId(string id)
         {
-            return await SpecificationQueryBuilder.GetQuery(_context.Clothing, specification, _queryBuilder).ToListAsync();
+            var spec = new GetClothingListByUserIdSpecification(id);
+            var ty = await GetAll(spec);
+            return ty;
         }
     }
 }

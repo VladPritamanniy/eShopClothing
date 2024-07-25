@@ -1,15 +1,19 @@
 using Application.Interfaces;
 using Application.Mapper;
 using Application.Services;
-using Core.Entities;
 using Core.Options;
 using Core.Repositories;
-using Core.Specification.Base;
+using Core.Repositories.Base;
+using Core.Specifications.Base;
 using Infrastructure;
 using Infrastructure.Identity;
 using Infrastructure.Repositories;
+using Infrastructure.Repositories.Base;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using StackExchange.Redis;
+using Web.Interfaces;
 using Web.Mapper;
+using Web.Services;
 
 namespace Web
 {
@@ -48,10 +52,19 @@ namespace Web
             builder.Services.AddAutoMapper(typeof(DtoProfile));
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddScoped<IClothingService, ClothingService>();
+            builder.Services.AddScoped<ITypeService, TypeService>();
+            builder.Services.AddScoped<ISizeService, SizeService>();
             builder.Services.AddScoped<IClothingRepository, ClothingRepository>();
-            builder.Services.AddScoped<IQueryBuilder<Clothing>, EfCoreQueryBuilder<Clothing>>();
+            builder.Services.AddScoped<ITypeRepository, TypeRepository>();
+            builder.Services.AddScoped<ISizeRepository, SizeRepository>();
+            builder.Services.AddScoped(typeof(IQueryBuilder<>), typeof(EfCoreQueryBuilder<>));
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<IProductPageService, ProductPageService>();
+            builder.Services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")));
+
             builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection(nameof(AuthMessageSenderOptions)));
             builder.Services.Configure<LoginOptions>(builder.Configuration.GetSection(nameof(LoginOptions)));
+            builder.Services.Configure<ImageOptions>(builder.Configuration.GetSection(nameof(ImageOptions)));
 
             var app = builder.Build();
             await app.Services.MigrateDatabaseAsync();

@@ -1,10 +1,11 @@
 ﻿using Core.Entities.Base;
-using Core.Specification.Base;
+using Core.Specifications.Base;
 
 namespace Core.Repositories.Base
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<List<TEntity>> GetById(string id, Specification<TEntity> specification);
+        Task<IReadOnlyList<TEntity>> GetAll();
+        Task<IReadOnlyList<TEntity>> GetAll(Specification<TEntity> specification);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Core.Entities.Base;
 
-namespace Core.Specification.Base
+namespace Core.Specifications.Base
 {
     public static class SpecificationQueryBuilder
     {

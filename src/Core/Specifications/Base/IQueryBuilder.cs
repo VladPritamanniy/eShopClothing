@@ -1,7 +1,7 @@
 ﻿using Core.Entities.Base;
 using System.Linq.Expressions;
 
-namespace Core.Specification.Base
+namespace Core.Specifications.Base
 {
     public interface IQueryBuilder<TEntity>
         where TEntity : BaseEntity
