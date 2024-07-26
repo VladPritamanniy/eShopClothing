@@ -7,5 +7,6 @@ namespace Core.Repositories.Base
     {
         Task<IReadOnlyList<TEntity>> GetAll();
         Task<IReadOnlyList<TEntity>> GetAll(Specification<TEntity> specification);
+        Task Add(TEntity entity);
     }
 }

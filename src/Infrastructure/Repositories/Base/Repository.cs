@@ -26,6 +26,12 @@ namespace Infrastructure.Repositories.Base
             return await ApplySpecification(specification).ToListAsync();
         }
 
+        public async Task Add(TEntity entity)
+        {
+            await _dbContext.Set<TEntity>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+        }
+
         private IQueryable<TEntity> ApplySpecification(Specification<TEntity> specification)
         {
             return SpecificationQueryBuilder.GetQuery(_dbContext.Set<TEntity>(), specification, _queryBuilder);

@@ -11,6 +11,7 @@ namespace Application.Mapper
             CreateMap<Clothing, ClothingDto>().ReverseMap();
             CreateMap<Size, SizeDto>().ReverseMap();
             CreateMap<Core.Entities.Type, TypeDto>().ReverseMap();
+            CreateMap<Image, ImageDto>().ReverseMap();
         }
     }
 }

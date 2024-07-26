@@ -1,10 +1,11 @@
-﻿using Web.ViewModels;
+﻿using System.Security.Claims;
+using Web.ViewModels;
 
 namespace Web.Interfaces
 {
     public interface IProductPageService
     {
-        Task CreateProduct(CreateClothingViewModel product);
+        Task CreateProduct(CreateClothingViewModel product, ClaimsPrincipal claims);
         Task<IEnumerable<SizeViewModel>> GetAllSizesClothing();
         Task<IEnumerable<TypeViewModel>> GetAllTypesClothing();
     }

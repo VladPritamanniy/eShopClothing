@@ -33,7 +33,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             try
             {
-                await _productPageService.CreateProduct(Product);
+                await _productPageService.CreateProduct(Product, User);
                 return LocalRedirect(returnUrl);
             }
             catch (FileSignatureException ex)

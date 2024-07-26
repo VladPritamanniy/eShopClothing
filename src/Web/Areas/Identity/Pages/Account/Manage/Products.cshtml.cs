@@ -1,5 +1,7 @@
 using Application.Interfaces;
 using AutoMapper;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Web.ViewModels;
@@ -10,11 +12,13 @@ namespace Web.Areas.Identity.Pages.Account.Manage
     {
         public readonly IClothingService _clothingService;
         public IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProductsModel(IClothingService clothingService, IMapper mapper)
+        public ProductsModel(IClothingService clothingService, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _clothingService = clothingService;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public string ReturnUrl { get; set; }
@@ -24,8 +28,12 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         public async Task OnGet(string returnUrl = null)
         {
             returnUrl ??= Url.RouteUrl(string.Empty);
-            
-            var clothingDto = await _clothingService.GetAllUserProductByUserId("1");
+
+            var user = await _userManager.GetUserAsync(User);
+            var userId = await _userManager.GetUserIdAsync(user!);
+
+            var clothingDto = await _clothingService.GetAllUserProductByUserId(userId);
+
             Items = _mapper.Map<IEnumerable<CreateClothingViewModel>>(clothingDto);
             ReturnUrl = returnUrl;
         }

@@ -26,7 +26,5 @@ namespace Web.ViewModels
         [Required]
         [Display(Name = "File")]
         public List<IFormFile> FormFiles { get; set; }
-
-        public HashSet<ImageViewModel> Images { get; set; } = new HashSet<ImageViewModel>();
     }
 }

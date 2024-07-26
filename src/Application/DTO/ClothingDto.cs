@@ -12,7 +12,8 @@ namespace Application.DTO
         public int? OldPrice { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? DayOfSold { get; set; }
-        public HashSet<ImageDto> Images { get; set; }
+        public string ApplicationUserId { get; set; }
+        public HashSet<ImageDto> Images { get; set; } = new HashSet<ImageDto>();
         public SizeDto Size { get; set; }
         public TypeDto Type { get; set; }
     }

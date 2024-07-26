@@ -5,5 +5,6 @@ namespace Application.Interfaces
     public interface IClothingService
     {
         Task<IEnumerable<ClothingDto>> GetAllUserProductByUserId(string id);
+        Task CreateClothing(ClothingDto clothing);
     }
 }

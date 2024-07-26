@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using AutoMapper;
 using Core.Repositories;
+using Core.Entities;
 
 namespace Application.Services
 {
@@ -21,6 +22,12 @@ namespace Application.Services
             var list = await _productRepository.GetAllUserProductByUserId(id);
             var mapped = _mapper.Map<IEnumerable<ClothingDto>>(list);
             return mapped;
+        }
+
+        public async Task CreateClothing(ClothingDto clothing)
+        {
+            var mapped = _mapper.Map<Clothing>(clothing);
+            await _productRepository.Add(mapped);
         }
     }
 }

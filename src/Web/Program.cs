@@ -54,6 +54,7 @@ namespace Web
             builder.Services.AddScoped<IClothingService, ClothingService>();
             builder.Services.AddScoped<ITypeService, TypeService>();
             builder.Services.AddScoped<ISizeService, SizeService>();
+            builder.Services.AddScoped<IFileService, FileService>();
             builder.Services.AddScoped<IClothingRepository, ClothingRepository>();
             builder.Services.AddScoped<ITypeRepository, TypeRepository>();
             builder.Services.AddScoped<ISizeRepository, SizeRepository>();
