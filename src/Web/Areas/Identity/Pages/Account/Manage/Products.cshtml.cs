@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using AutoMapper;
 using Infrastructure.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,6 +9,7 @@ using Web.ViewModels;
 
 namespace Web.Areas.Identity.Pages.Account.Manage
 {
+    [Authorize(Policy = "UserPolicy")]
     public class ProductsModel : PageModel
     {
         public readonly IClothingService _clothingService;
@@ -23,7 +25,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
         public string ReturnUrl { get; set; }
 
-        public IEnumerable<CreateClothingViewModel> Items { get; set; }
+        public IEnumerable<AccountClothingViewModel> Items { get; set; }
 
         public async Task OnGet(string returnUrl = null)
         {
@@ -34,7 +36,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             var clothingDto = await _clothingService.GetAllUserProductByUserId(userId);
 
-            Items = _mapper.Map<IEnumerable<CreateClothingViewModel>>(clothingDto);
+            Items = _mapper.Map<IEnumerable<AccountClothingViewModel>>(clothingDto);
             ReturnUrl = returnUrl;
         }
 
@@ -42,6 +44,11 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         {
             returnUrl ??= Url.RouteUrl(string.Empty);
             return LocalRedirect(returnUrl);
+        }
+
+        public async Task<IActionResult> OnPostDeleteProduct(int? id)
+        {
+            return LocalRedirect("/");
         }
     }
 }

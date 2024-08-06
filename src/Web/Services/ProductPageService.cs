@@ -44,7 +44,9 @@ namespace Web.Services
         {
             var mapped = _mapper.Map<ClothingDto>(product);
             var user = await _userManager.GetUserAsync(claims);
+            mapped.OldPrice = mapped.ValidPrice;
             mapped.ApplicationUserId = user!.Id;
+            mapped.CreationDate = DateTime.UtcNow;
             var dto = await _fileService.UploadFiles(mapped, product.FormFiles);
             await _clothingService.CreateClothing(dto);
         }

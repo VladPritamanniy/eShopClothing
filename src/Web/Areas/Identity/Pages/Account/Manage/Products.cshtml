@@ -1,4 +1,54 @@
 ﻿@page
 @model ProductsModel
 
-<a asp-page="./CreateProduct" asp-route-returnUrl="@Model.ReturnUrl">Create product</a>
+<a class="btn btn-info" asp-page="./CreateProduct" asp-route-returnUrl="@Model.ReturnUrl">Create product</a>
+
+@foreach (var item in Model.Items)
+{
+    <div class="product-item">
+        <div class="main-info">
+            <div class="status">
+                <label><b>№@item.Id</b></label>
+            </div>
+            <div class="info">
+                <div class="images">
+                    @foreach (var stringImg in item.Images)
+                    {
+                        <img id="ItemPreview" src="data:image/png;base64,@Convert.ToBase64String(stringImg.Value)" width="65" height="80"/>
+                    }
+                </div>
+                <div class="price">
+                    <label><b>@item.ValidPrice $</b></label>
+                    <img onclick="changeVisibilityAdditionalInfo(this, @item.Id)" src="~/img/arrow-down.png" width="20" height="20"/>
+                </div>
+            </div>
+        </div>
+        <div class="additional-info_@item.Id">
+            <label><b>Product name: </b>@item.Name</label>
+            <label><b>Product type: </b>@item.Type.Name</label>
+            <label><b>Product size: </b>@item.Size.Name</label>
+            <label><b>Creation date: </b>@item.CreationDate.ToShortDateString()</label>
+            <div class="actions">
+                <form method="post" asp-page-handler="DeleteProduct">
+                    <input type="hidden" name="id" value="@item.Id"/>
+                    <input class="btn btn-danger" type="submit" value="Delete" />
+                </form>
+                <a class="btn btn-secondary" asp-page="./ChangeProductPrice" asp-route-id="@item.Id">Change price</a>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    function changeVisibilityAdditionalInfo(arrow, blockId) {
+        let src = (arrow.src === this.origin + "/img/arrow-down.png")
+            ? "/img/arrow-up.png"
+            : "/img/arrow-down.png";
+        arrow.src = src;
+
+        let display = ($(".additional-info_" + blockId).css("display") === 'none')
+            ? 'grid'
+            : 'none';
+        $(".additional-info_" + blockId).css("display", display);
+    }
+
+</script>

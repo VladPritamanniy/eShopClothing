@@ -1,0 +1,13 @@
+﻿@page "{id}"
+@model ChangeProductPriceModel;
+
+<form method="post">
+    <div class="form-group">
+        <label>@Model.Item.OldPrice</label>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.ValidPrice" class="control-label"></label>
+        <input asp-for="Item.ValidPrice" class="form-control" />
+        <span asp-validation-for="Item.ValidPrice" class="text-danger"></span>
+    </div>
+</form>

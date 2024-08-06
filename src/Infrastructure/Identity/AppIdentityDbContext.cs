@@ -16,5 +16,7 @@ namespace Infrastructure.Identity
         public DbSet<Core.Entities.Type> Type { get; set; }
 
         public DbSet<Size> Size { get; set; }
+
+        public DbSet<Image> Image { get; set; }
     }
 }

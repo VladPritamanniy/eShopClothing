@@ -195,7 +195,7 @@ namespace Infrastructure.Migrations
                     TypeId = table.Column<int>(type: "integer", nullable: false),
                     ValidPrice = table.Column<int>(type: "integer", nullable: true),
                     OldPrice = table.Column<int>(type: "integer", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: DateTime.UtcNow),
                     DayOfSold = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "text", nullable: false)
                 },

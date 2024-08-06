@@ -12,6 +12,7 @@ namespace Web.Mapper
             CreateMap<SizeDto, SizeViewModel>().ReverseMap();
             CreateMap<TypeDto, TypeViewModel>().ReverseMap();
             CreateMap<ImageDto, ImageViewModel>().ReverseMap();
+            CreateMap<ClothingDto, AccountClothingViewModel>().ReverseMap();
         }
     }
 }

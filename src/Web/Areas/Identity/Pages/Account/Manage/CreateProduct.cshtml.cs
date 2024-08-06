@@ -1,4 +1,5 @@
 using Core.Exceptions.File;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +8,7 @@ using Web.ViewModels;
 
 namespace Web.Areas.Identity.Pages.Account.Manage
 {
+    [Authorize(Policy = "UserPolicy")]
     public class CreateProductModel : PageModel
     {
         private readonly IProductPageService _productPageService;
