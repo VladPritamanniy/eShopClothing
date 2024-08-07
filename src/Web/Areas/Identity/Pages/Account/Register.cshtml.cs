@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Security.Claims;
-using System.Text;
+using System.Text.Encodings.Web;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace Web.Areas.Identity.Pages.Account
 {
@@ -91,15 +91,15 @@ namespace Web.Areas.Identity.Pages.Account
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    code = WebUtility.UrlEncode(code);
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                        values: new { area = "Identity", userId = userId, returnUrl = returnUrl },
+                        protocol: Request.Scheme) + $"&code={code}";
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"<a href='{(callbackUrl)}'>Please confirm your account by clicking here.</a>");
+                        $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Please confirm your account by clicking here.</a>");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
