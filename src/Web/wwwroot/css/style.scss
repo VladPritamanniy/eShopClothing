@@ -171,6 +171,29 @@ body {
                 display: flex;
                 align-items: center;
                 gap: 20px;
+
+                .discount {
+                    display: grid;
+
+                    .old-price-label {
+                        font-size: 14px;
+                        font-weight: 400;
+                        text-decoration: line-through;
+                        color: grey;
+                    }
+
+                    .valid-price-label {
+                        font-size: 24px;
+                        font-weight: 500;
+                        color: red;
+                    }
+                }
+
+                .price-without-discount {
+                    font-size: 24px;
+                    font-weight: 500;
+                    color: black;
+                }
             }
         }
     }
@@ -178,9 +201,10 @@ body {
     div[class^="additional-info_"] {
         display: none;
 
-        label{
+        label {
             margin: 5px 0px;
-        } 
+        }
+
         .actions {
             display: flex;
             gap: 10px;

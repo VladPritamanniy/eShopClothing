@@ -5,7 +5,7 @@ namespace Web.ViewModels
     public class ChangeClothingPriceViewModel
     {
         [Display(Name = "OldPrice")]
-        public int OldPrice { get; set; }
+        public int? OldPrice { get; set; }
 
         [Required]
         [Display(Name = "ValidPrice")]

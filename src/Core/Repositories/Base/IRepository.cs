@@ -1,12 +1,6 @@
-﻿using Core.Entities.Base;
-using Core.Specifications.Base;
-
-namespace Core.Repositories.Base
+﻿namespace Core.Repositories.Base
 {
-    public interface IRepository<TEntity> where TEntity : BaseEntity
+    public interface IRepository<T> : IRepositoryBase<T> where T : class
     {
-        Task<IReadOnlyList<TEntity>> GetAll();
-        Task<IReadOnlyList<TEntity>> GetAll(Specification<TEntity> specification);
-        Task Add(TEntity entity);
     }
 }

@@ -1,16 +1,17 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
 using AutoMapper;
-using Core.Repositories;
+using Core.Repositories.Base;
+using Type = Core.Entities.Type;
 
 namespace Application.Services
 {
     public class TypeService : ITypeService
     {
-        private readonly ITypeRepository _typeRepository;
+        private readonly IRepository<Type> _typeRepository;
         private readonly IMapper _mapper;
 
-        public TypeService(ITypeRepository typeRepository, IMapper mapper)
+        public TypeService(IRepository<Type> typeRepository, IMapper mapper)
         {
             _typeRepository = typeRepository;
             _mapper = mapper;
@@ -18,8 +19,8 @@ namespace Application.Services
 
         public async Task<IEnumerable<TypeDto>> GetAllTypesClothing()
         {
-            var list = await _typeRepository.GetAll();
-            var mapped = _mapper.Map<IEnumerable<TypeDto>>(list);
+            var entities = await _typeRepository.GetAll();
+            var mapped = _mapper.Map<IEnumerable<TypeDto>>(entities);
             return mapped;
         }
     }

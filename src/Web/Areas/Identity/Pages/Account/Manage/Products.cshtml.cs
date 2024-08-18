@@ -12,8 +12,8 @@ namespace Web.Areas.Identity.Pages.Account.Manage
     [Authorize(Policy = "UserPolicy")]
     public class ProductsModel : PageModel
     {
-        public readonly IClothingService _clothingService;
-        public IMapper _mapper;
+        private readonly IClothingService _clothingService;
+        private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public ProductsModel(IClothingService clothingService, IMapper mapper, UserManager<ApplicationUser> userManager)

@@ -6,5 +6,7 @@ namespace Application.Interfaces
     {
         Task<IEnumerable<ClothingDto>> GetAllUserProductByUserId(string id);
         Task CreateClothing(ClothingDto clothing);
+        Task<int?> GetClothingPriceById(int clothingId);
+        Task ChangePriceById(int id, int price);
     }
 }

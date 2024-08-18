@@ -1,52 +1,42 @@
 ﻿using System.Linq.Expressions;
-using Core.Entities.Base;
 
 namespace Core.Specifications.Base
 {
-    public abstract class Specification<TEntity>
-        where TEntity : BaseEntity
+    public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
     {
-        public Specification()
+        public Expression<Func<T, TResult>>? Selector { get; set; }
+
+        protected virtual void ApplySelector(Expression<Func<T, TResult>> selectorExpression)
         {
+            Selector = selectorExpression;
+        }
+    }
+
+    public class Specification<T> : ISpecification<T>
+    {
+        public Expression<Func<T, bool>> Criteria { get; set; }
+        public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
+        public Expression<Func<T, object>> OrderBy { get; set; }
+        public Expression<Func<T, object>> OrderByDescending { get; set; }
+
+        protected virtual void AddCriteria(Expression<Func<T, bool>> criteriaExpression)
+        {
+            Criteria = criteriaExpression;
         }
 
-        public Specification(Expression<Func<TEntity, bool>> criteria)
+        protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
-            Criteria = criteria;
+            Includes.Add(includeExpression);
         }
 
-        public Expression<Func<TEntity, bool>>? Criteria { get; }
-
-        public List<Expression<Func<TEntity, object>>>? Includes { get; } =
-            new List<Expression<Func<TEntity, object>>>();
-
-        public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
-
-        public Expression<Func<TEntity, object>>? Take { get; private set; }
-
-        public Expression<Func<TEntity, object>>? Skip { get; private set; }
-
-        public bool IsNoTracking { get; private set; }
-
-        protected void AddInclude(Expression<Func<TEntity, object>> includeExpression)
-        {
-            Includes?.Add(includeExpression);
-        }
-
-        protected void AddOrderBy(Expression<Func<TEntity, object>> orderByExpression)
+        protected virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
         }
 
-        protected void ApplyPaging(Expression<Func<TEntity, object>> skip, Expression<Func<TEntity, object>> take)
+        protected virtual void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
-            Skip = skip;
-            Take = take;
-        }
-
-        protected void ApplyNoTracking()
-        {
-            IsNoTracking = true;
+            OrderByDescending = orderByDescendingExpression;
         }
     }
 }

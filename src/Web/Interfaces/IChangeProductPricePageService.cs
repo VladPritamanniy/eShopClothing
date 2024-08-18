@@ -2,6 +2,7 @@
 {
     public interface IChangeProductPricePageService
     {
-        Task ChangePrice(int price);
+        Task<int?> GetProductPrice(int productId, string userId);
+        Task ChangePrice(int productId, int productPrice, string userId);
     }
 }

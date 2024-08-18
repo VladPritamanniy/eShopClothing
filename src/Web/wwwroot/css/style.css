@@ -127,6 +127,21 @@ body {
         display: flex;
         align-items: center;
         gap: 20px; }
+        .product-item .main-info .info .price .discount {
+          display: grid; }
+          .product-item .main-info .info .price .discount .old-price-label {
+            font-size: 14px;
+            font-weight: 400;
+            text-decoration: line-through;
+            color: grey; }
+          .product-item .main-info .info .price .discount .valid-price-label {
+            font-size: 24px;
+            font-weight: 500;
+            color: red; }
+        .product-item .main-info .info .price .price-without-discount {
+          font-size: 24px;
+          font-weight: 500;
+          color: black; }
   .product-item div[class^="additional-info_"] {
     display: none; }
     .product-item div[class^="additional-info_"] label {
