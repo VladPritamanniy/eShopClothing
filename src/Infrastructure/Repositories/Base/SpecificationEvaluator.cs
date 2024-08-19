@@ -13,6 +13,7 @@ namespace Infrastructure.Repositories.Base
                 ? query.Select(specification.Selector)
                 : throw new NullReferenceException("Selector specification is null. You must choose selector.");
         }
+
         public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
         {
             if (specification.Criteria != null)

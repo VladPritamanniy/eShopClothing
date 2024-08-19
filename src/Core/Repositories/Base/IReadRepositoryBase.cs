@@ -9,5 +9,6 @@ namespace Core.Repositories.Base
         Task<T?> FirstOrDefaultAsync(ISpecification<T> specification);
         Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification);
         Task<TResult?> Get<TResult>(ISpecification<T, TResult> specification);
+        Task<TResult[]?> ToArrayAsync<TResult>(ISpecification<T, TResult> spec);
     }
 }

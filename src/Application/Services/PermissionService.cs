@@ -17,10 +17,9 @@ namespace Application.Services
 
         public async Task IsProductOwner(int productId, string userId)
         {
-            var specification = new ClothingByUserIdSpecification(userId);
-            var list = await _clothingRepository.Get(specification);
-            var ids = list.Select(p => p.Id);
-            if (!ids.Contains(productId))
+            var specification = new ClothingIdsByOwnerIdSpecification(userId);
+            var arrayIds = await _clothingRepository.ToArrayAsync(specification);
+            if (arrayIds == null || arrayIds.Length == 0 && !arrayIds.Contains(productId))
             {
                 throw new PermissionException();
             }

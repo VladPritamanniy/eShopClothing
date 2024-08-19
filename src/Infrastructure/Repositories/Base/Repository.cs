@@ -7,7 +7,7 @@ namespace Infrastructure.Repositories.Base
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly AppIdentityDbContext _dbContext;
+        private readonly AppIdentityDbContext _dbContext;
         private readonly ISpecificationEvaluator specificationEvaluator;
 
         public Repository(AppIdentityDbContext dbContext, ISpecificationEvaluator specificationEvaluator)
@@ -29,6 +29,11 @@ namespace Infrastructure.Repositories.Base
         public async Task<TResult?> Get<TResult>(ISpecification<T, TResult> spec)
         {
             return await ApplySpecification(spec).FirstOrDefaultAsync();
+        }
+
+        public async Task<TResult[]?> ToArrayAsync<TResult>(ISpecification<T, TResult> spec)
+        {
+            return await ApplySpecification(spec).ToArrayAsync();
         }
 
         public async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification)
