@@ -21,7 +21,7 @@ namespace Application.Services
         public async Task<IEnumerable<ClothingDto>> GetAllUserProductByUserId(string id)
         {
             var specification = new ClothingIncludeByUserIdSpecification(id);
-            var entities = await _clothingRepository.Get(specification);
+            var entities = await _clothingRepository.ToListAsync(specification);
             var mapped = _mapper.Map<IEnumerable<ClothingDto>>(entities);
             return mapped;
         }

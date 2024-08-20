@@ -21,19 +21,14 @@ namespace Infrastructure.Repositories.Base
             return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public async Task<IReadOnlyList<T>> Get(ISpecification<T> spec)
+        public async Task<IReadOnlyList<T>> ToListAsync(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).ToListAsync();
         }
 
-        public async Task<TResult?> Get<TResult>(ISpecification<T, TResult> spec)
+        public async Task<IReadOnlyList<TResult>> ToListAsync<TResult>(ISpecification<T, TResult> spec)
         {
-            return await ApplySpecification(spec).FirstOrDefaultAsync();
-        }
-
-        public async Task<TResult[]?> ToArrayAsync<TResult>(ISpecification<T, TResult> spec)
-        {
-            return await ApplySpecification(spec).ToArrayAsync();
+            return await ApplySpecification(spec).ToListAsync();
         }
 
         public async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification)
@@ -44,6 +39,31 @@ namespace Infrastructure.Repositories.Base
         public async Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification)
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync();
+        }
+
+        public async Task<T?> SingleOrDefaultAsync(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).SingleOrDefaultAsync();
+        }
+
+        public async Task<TResult?> SingleOrDefaultAsync<TResult>(ISpecification<T, TResult> specification)
+        {
+            return await ApplySpecification(specification).SingleOrDefaultAsync();
+        }
+
+        public async Task<int> CountAsync(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).CountAsync();
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await _dbContext.Set<T>().CountAsync();
+        }
+
+        public async Task<TResult[]?> ToArrayAsync<TResult>(ISpecification<T, TResult> spec)
+        {
+            return await ApplySpecification(spec).ToArrayAsync();
         }
 
         public async Task<int> SaveChangesAsync()

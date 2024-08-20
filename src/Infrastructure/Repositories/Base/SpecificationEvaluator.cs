@@ -11,7 +11,7 @@ namespace Infrastructure.Repositories.Base
 
             return specification.Selector is not null
                 ? query.Select(specification.Selector)
-                : throw new NullReferenceException("Selector specification is null. You must choose selector.");
+                : query.SelectMany(specification.SelectorMany!);
         }
 
         public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
@@ -24,14 +24,49 @@ namespace Infrastructure.Repositories.Base
             query = specification.Includes.Aggregate(query,
                 (current, include) => current.Include(include));
 
+            IOrderedQueryable<T>? orderedQuery = null;
 
-            if (specification.OrderBy != null)
+            foreach (var orderBy in specification.OrderBy)
             {
-                query = query.OrderBy(specification.OrderBy);
+                orderedQuery = orderedQuery == null
+                    ? query.OrderBy(orderBy)
+                    : orderedQuery.ThenBy(orderBy);
             }
-            else if (specification.OrderByDescending != null)
+
+            foreach (var orderByDescending in specification.OrderByDescending)
             {
-                query = query.OrderByDescending(specification.OrderByDescending);
+                orderedQuery = orderedQuery == null
+                    ? query.OrderByDescending(orderByDescending)
+                    : orderedQuery.ThenByDescending(orderByDescending);
+            }
+
+            if (orderedQuery != null)
+            {
+                query = orderedQuery;
+            }
+
+            if (specification.AsNoTrackingWithIdentityResolution)
+            {
+                query = query.AsNoTrackingWithIdentityResolution();
+            }
+            else if (specification.AsNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            if (specification.AsSplitQuery)
+            {
+                query = query.AsSplitQuery();
+            }
+
+            if (specification.Skip.HasValue && specification.Skip != 0)
+            {
+                query = query.Skip(specification.Skip.Value);
+            }
+
+            if (specification.Take.HasValue)
+            {
+                query = query.Take(specification.Take.Value);
             }
 
             return query;
