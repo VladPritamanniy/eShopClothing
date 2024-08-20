@@ -19,14 +19,14 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         }
 
         [BindProperty]
-        public CreateClothingViewModel Product { get; set; }
+        public ClothingCreateViewModel Product { get; set; }
 
         public async Task OnGet(string? returnUrl = null)
         {
             var sizeList = await _productPageService.GetAllSizesClothing();
             var typeList = await _productPageService.GetAllTypesClothing();
-            ViewData[nameof(CreateClothingViewModel.SizeId)] = new SelectList(sizeList, nameof(SizeViewModel.Id), nameof(SizeViewModel.Name));
-            ViewData[nameof(CreateClothingViewModel.TypeId)] = new SelectList(typeList, nameof(TypeViewModel.Id), nameof(TypeViewModel.Name));
+            ViewData[nameof(ClothingCreateViewModel.SizeId)] = new SelectList(sizeList, nameof(SizeViewModel.Id), nameof(SizeViewModel.Name));
+            ViewData[nameof(ClothingCreateViewModel.TypeId)] = new SelectList(typeList, nameof(TypeViewModel.Id), nameof(TypeViewModel.Name));
         }
 
         public async Task<IActionResult> OnPost(string? returnUrl = null)

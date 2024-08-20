@@ -25,7 +25,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
         public string ReturnUrl { get; set; }
 
-        public IEnumerable<AccountClothingViewModel> Items { get; set; }
+        public IEnumerable<ClothingAccountViewModel> Items { get; set; }
 
         public async Task OnGet(string returnUrl = null)
         {
@@ -36,7 +36,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             var clothingDto = await _clothingService.GetAllUserProductByUserId(userId);
 
-            Items = _mapper.Map<IEnumerable<AccountClothingViewModel>>(clothingDto);
+            Items = _mapper.Map<IEnumerable<ClothingAccountViewModel>>(clothingDto);
             ReturnUrl = returnUrl;
         }
 

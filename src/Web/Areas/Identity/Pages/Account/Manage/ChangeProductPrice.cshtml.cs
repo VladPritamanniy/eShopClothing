@@ -24,7 +24,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         }
 
         [BindProperty]
-        public ChangeClothingPriceViewModel Item { get; set; }
+        public ClothingChangePriceViewModel Item { get; set; }
 
         public async Task<IActionResult> OnGet(int id, string? returnUrl = null)
         {
@@ -34,7 +34,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 var user = await _userManager.GetUserAsync(User);
                 var userId = await _userManager.GetUserIdAsync(user!);
                 var oldPrice = await _changeProductPricePageService.GetProductPrice(id, userId);
-                Item = new ChangeClothingPriceViewModel()
+                Item = new ClothingChangePriceViewModel()
                 {
                     OldPrice = oldPrice
                 };

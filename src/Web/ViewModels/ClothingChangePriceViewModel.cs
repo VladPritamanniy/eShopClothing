@@ -2,7 +2,7 @@
 
 namespace Web.ViewModels
 {
-    public class ChangeClothingPriceViewModel
+    public class ClothingChangePriceViewModel
     {
         [Display(Name = "OldPrice")]
         public int? OldPrice { get; set; }

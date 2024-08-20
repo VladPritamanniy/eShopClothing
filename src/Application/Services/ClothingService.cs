@@ -18,15 +18,15 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ClothingDto>> GetAllUserProductByUserId(string id)
+        public async Task<IEnumerable<ClothingAccountDto>> GetAllUserProductByUserId(string id)
         {
             var specification = new ClothingIncludeByUserIdSpecification(id);
             var entities = await _clothingRepository.ToListAsync(specification);
-            var mapped = _mapper.Map<IEnumerable<ClothingDto>>(entities);
+            var mapped = _mapper.Map<IEnumerable<ClothingAccountDto>>(entities);
             return mapped;
         }
 
-        public async Task CreateClothing(ClothingDto clothing)
+        public async Task CreateClothing(ClothingCreateDto clothing)
         {
             var mapped = _mapper.Map<Clothing>(clothing);
             await _clothingRepository.AddAsync(mapped);

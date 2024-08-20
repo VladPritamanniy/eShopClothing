@@ -8,7 +8,8 @@ namespace Application.Mapper
     {
         public DtoProfile()
         {
-            CreateMap<Clothing, ClothingDto>().ReverseMap();
+            CreateMap<Clothing, ClothingAccountDto>().ReverseMap();
+            CreateMap<Clothing, ClothingCreateDto>().ReverseMap();
             CreateMap<Size, SizeDto>().ReverseMap();
             CreateMap<Core.Entities.Type, TypeDto>().ReverseMap();
             CreateMap<Image, ImageDto>().ReverseMap();

@@ -2,14 +2,14 @@
 
 namespace Web.ViewModels
 {
-    public class AccountClothingViewModel : BaseViewModel
+    public class ClothingAccountViewModel : BaseViewModel
     {
         public string Name { get; set; }
         public int OldPrice { get; set; }
         public int ValidPrice { get; set; }
         public DateTime CreationDate { get; set; }
+        public string SizeName { get; set; }
+        public string TypeName { get; set; }
         public HashSet<ImageViewModel> Images { get; set; }
-        public SizeViewModel Size { get; set; }
-        public TypeViewModel Type { get; set; }
     }
 }

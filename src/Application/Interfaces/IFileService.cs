@@ -5,6 +5,6 @@ namespace Application.Interfaces
 {
     public interface IFileService
     {
-        Task<ClothingDto> UploadFiles(ClothingDto clothingDto, List<IFormFile> files);
+        Task<ClothingCreateDto> UploadFiles(ClothingCreateDto clothingDto, List<IFormFile> files);
     }
 }

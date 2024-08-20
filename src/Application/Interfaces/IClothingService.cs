@@ -4,8 +4,8 @@ namespace Application.Interfaces
 {
     public interface IClothingService
     {
-        Task<IEnumerable<ClothingDto>> GetAllUserProductByUserId(string id);
-        Task CreateClothing(ClothingDto clothing);
+        Task<IEnumerable<ClothingAccountDto>> GetAllUserProductByUserId(string id);
+        Task CreateClothing(ClothingCreateDto clothing);
         Task<int?> GetClothingPriceById(int clothingId);
         Task ChangePriceById(int id, int price);
     }

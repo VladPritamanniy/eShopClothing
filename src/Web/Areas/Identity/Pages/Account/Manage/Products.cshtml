@@ -2,7 +2,7 @@
 @using Web.ViewModels
 @model ProductsModel
 @functions {
-    public bool CheckDiscount(AccountClothingViewModel item)
+    public bool CheckDiscount(ClothingAccountViewModel item)
     {
         return item.OldPrice > item.ValidPrice;
     }
@@ -41,8 +41,8 @@
         </div>
         <div class="additional-info_@item.Id">
             <label><b>Product name: </b>@item.Name</label>
-            <label><b>Product type: </b>@item.Type.Name</label>
-            <label><b>Product size: </b>@item.Size.Name</label>
+            <label><b>Product type: </b>@item.TypeName</label>
+            <label><b>Product size: </b>@item.SizeName</label>
             <label><b>Creation date: </b>@item.CreationDate.ToShortDateString()</label>
             <div class="actions">
                 <form method="post" asp-page-handler="DeleteProduct">

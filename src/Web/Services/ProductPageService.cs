@@ -40,9 +40,9 @@ namespace Web.Services
             _userManager = userManager;
         }
 
-        public async Task CreateProduct(CreateClothingViewModel product, ClaimsPrincipal claims)
+        public async Task CreateProduct(ClothingCreateViewModel product, ClaimsPrincipal claims)
         {
-            var mapped = _mapper.Map<ClothingDto>(product);
+            var mapped = _mapper.Map<ClothingCreateDto>(product);
             var user = await _userManager.GetUserAsync(claims);
             mapped.OldPrice = mapped.ValidPrice;
             mapped.ApplicationUserId = user!.Id;

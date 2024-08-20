@@ -3,7 +3,7 @@ using Web.ViewModels.Base;
 
 namespace Web.ViewModels
 {
-    public class CreateClothingViewModel : BaseViewModel
+    public class ClothingCreateViewModel : BaseViewModel
     {
         [Required]
         public string Name { get; set; }
@@ -21,7 +21,7 @@ namespace Web.ViewModels
 
         [Required]
         [Display(Name="Price")]
-        public int ValidPrice { get; set; }
+        public int Price { get; set; }
 
         [Required]
         [Display(Name = "File")]

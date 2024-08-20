@@ -42,7 +42,7 @@ namespace Application.Services
             Options = options.Value;
         }
 
-        public async Task<ClothingDto> UploadFiles(ClothingDto clothingDto, List<IFormFile> files)
+        public async Task<ClothingCreateDto> UploadFiles(ClothingCreateDto clothingDto, List<IFormFile> files)
         {
             foreach (var file in files)
             {
