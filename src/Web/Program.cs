@@ -43,7 +43,7 @@ namespace Web
             {
                 options.AppendTrailingSlash = false;
                 options.LowercaseUrls = true;
-                options.LowercaseQueryStrings = true;
+                //options.LowercaseQueryStrings = true;
             });
 
             builder.Services.AddAutoMapper(typeof(ViewModelProfile));
@@ -58,6 +58,7 @@ namespace Web
             builder.Services.AddScoped<IProductPageService, ProductPageService>();
             builder.Services.AddScoped<IChangeProductPricePageService, ChangeProductPricePageService>();
             builder.Services.AddScoped<IPermissionService, PermissionService>();
+            builder.Services.AddScoped<IClothingPageService, ClothingPageService>();
             //builder.Services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")));
 
             builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection(nameof(AuthMessageSenderOptions)));

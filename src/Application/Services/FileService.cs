@@ -14,6 +14,7 @@ namespace Application.Services
             {
                 { ".jpg", new List<byte[]>
                     {
+                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 },
                         new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
                         new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
                         new byte[] { 0xFF, 0xD8, 0xFF, 0xDB },
@@ -22,6 +23,8 @@ namespace Application.Services
                 },
                 { ".jpeg", new List<byte[]>
                     {
+                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 },
+                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 },
                         new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
                         new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
                         new byte[] { 0xFF, 0xD8, 0xFF, 0xDB },
@@ -71,27 +74,27 @@ namespace Application.Services
                 throw new ArgumentNullException("CheckingImagesSignatures -> file name is null.");
             }
 
-            var ext = Path.GetExtension(fileName).ToLowerInvariant();
+            var extensionFilePath = Path.GetExtension(fileName).ToLowerInvariant();
 
-            if (string.IsNullOrEmpty(ext))
+            if (string.IsNullOrEmpty(extensionFilePath))
             {
-                throw new FileFormatException($"An error while getting format this file - {ext}.");
+                throw new FileFormatException($"An error while getting format this file - {extensionFilePath}.");
             }
 
             data.Position = 0;
 
             using var reader = new BinaryReader(data);
 
-            if (!_fileSignature.ContainsKey(ext))
+            if (!_fileSignature.ContainsKey(extensionFilePath))
             {
-                throw new FileFormatException($"Unsupported file format - {ext}.");
+                throw new FileFormatException($"Unsupported file format - {extensionFilePath}.");
             }
 
-            var signatures = _fileSignature[ext];
-            var headerBytes = reader.ReadBytes(signatures.Max(m => m.Length));
+            var signatures = _fileSignature[extensionFilePath];
+            var headerFileBytes = reader.ReadBytes(signatures.Max(m => m.Length));
 
             bool isCorrectSignatures = signatures.Any(signature =>
-                headerBytes.Take(signature.Length).SequenceEqual(signature));
+                headerFileBytes.Take(signature.Length).SequenceEqual(signature));
             if (!isCorrectSignatures)
             {
                 throw new FileSignatureException($"File has incorrect signature - {fileName}.");

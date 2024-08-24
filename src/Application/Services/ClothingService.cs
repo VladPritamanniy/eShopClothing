@@ -30,6 +30,7 @@ namespace Application.Services
         {
             var mapped = _mapper.Map<Clothing>(clothing);
             await _clothingRepository.AddAsync(mapped);
+            await _clothingRepository.SaveChangesAsync();
         }
 
         public async Task<int?> GetClothingPriceById(int id)
@@ -54,6 +55,25 @@ namespace Application.Services
 
             entity.ValidPrice = price;
             await _clothingRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ClothingItemPageDto>> GetAllWithPagination(ClothingPaginationFilterDto paginationFilterDto)
+        {
+            var specification = new ClothingFilterPaginatedSpecification(
+                paginationFilterDto.PageNum,
+                paginationFilterDto.PageSize,
+                paginationFilterDto.TypeId,
+                paginationFilterDto.SizeId);
+
+            var entities = await _clothingRepository.ToListAsync(specification);
+            var mapped = _mapper.Map<IEnumerable<ClothingItemPageDto>>(entities);
+            return mapped;
+        }
+
+        public async Task<int> GetCount(int? typeId, int? sizeId)
+        {
+            var specification = new ClothingFilterSpecification(typeId, sizeId);
+            return await _clothingRepository.CountAsync(specification);
         }
     }
 }

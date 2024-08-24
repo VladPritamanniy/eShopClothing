@@ -8,13 +8,17 @@ namespace Web.Mapper
     {
         public ViewModelProfile()
         {
-            CreateMap<ClothingCreateDto, ClothingCreateViewModel>().ReverseMap();
+            CreateMap<ClothingCreateDto, ClothingCreateViewModel>()
+                .ForMember(p=>p.Price, d=>d.MapFrom(s=>s.ValidPrice))
+                .ReverseMap();
             CreateMap<SizeDto, SizeViewModel>().ReverseMap();
             CreateMap<TypeDto, TypeViewModel>().ReverseMap();
             CreateMap<ImageDto, ImageViewModel>().ReverseMap();
-            CreateMap<ClothingAccountDto, ClothingAccountViewModel>().ReverseMap()
-                .ForPath(p=>p.Size.Name, d=>d.MapFrom(s=>s.SizeName))
-                .ForPath(p => p.Type.Name, d => d.MapFrom(s => s.TypeName));
+            CreateMap<ClothingAccountDto, ClothingAccountViewModel>()
+                .ForMember(p=>p.SizeName, d=>d.MapFrom(s=>s.Size.Name))
+                .ForMember(p => p.TypeName, d => d.MapFrom(s => s.Type.Name))
+                .ReverseMap();
+            CreateMap<ClothingItemPageDto, ClothingItemPageViewModel>().ReverseMap();
         }
     }
 }

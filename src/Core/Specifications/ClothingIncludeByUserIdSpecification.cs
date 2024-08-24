@@ -8,6 +8,7 @@ namespace Core.Specifications
         public ClothingIncludeByUserIdSpecification(string id)
         {
             AddCriteria(p => p.ApplicationUserId == id);
+            ApplyOrderByDescending(p=>p.CreationDate);
             AddInclude(p => p.Size);
             AddInclude(p => p.Type);
             AddInclude(p => p.Images);

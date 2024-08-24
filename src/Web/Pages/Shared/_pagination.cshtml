@@ -1,0 +1,29 @@
+﻿@model PaginationInfoViewModel
+@{
+    var prevRouteData = Context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
+    if (prevRouteData.ContainsKey("pageNum"))
+        prevRouteData.Remove("pageNum");
+    prevRouteData.Add("pageNum", (Model.ActualPage - 1).ToString());
+
+    var nextRouteData = Context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
+    if (nextRouteData.ContainsKey("pageNum"))
+        nextRouteData.Remove("pageNum");
+    nextRouteData.Add("pageNum", (Model.ActualPage + 1).ToString());
+}
+<div class="pager">
+    <article class="pager-wrapper">
+        <nav>
+            <a class="btn pager-item--navigable pager-item pager-item-left @Model.Previous" asp-all-route-data="prevRouteData">
+                Previous
+            </a>
+
+            <span class="pager-item">
+                We found @Model.TotalItems products - Page @Model.ActualPage - @Model.TotalPages
+            </span>
+
+            <a class="btn pager-item--navigable pager-item pager-item-right @Model.Next" asp-all-route-data="nextRouteData">
+                Next
+            </a>
+        </nav>
+    </article>
+</div>

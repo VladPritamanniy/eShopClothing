@@ -12,10 +12,12 @@ namespace Web.Areas.Identity.Pages.Account.Manage
     public class CreateProductModel : PageModel
     {
         private readonly IProductPageService _productPageService;
+        private readonly ILogger<CreateProductModel> _logger;
 
-        public CreateProductModel(IProductPageService productPageService)
+        public CreateProductModel(IProductPageService productPageService, ILogger<CreateProductModel> logger)
         {
             _productPageService = productPageService;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -40,21 +42,25 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             }
             catch (FileSignatureException ex)
             {
+                _logger.LogError(ex.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return Page();
             }
             catch (FileFormatException ex)
             {
+                _logger.LogError(ex.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return Page();
             }
             catch (FileSizeException ex)
             {
+                _logger.LogError(ex.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return Page();
             }
             catch (ArgumentNullException ex)
             {
+                _logger.LogError(ex.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return Page();
             }

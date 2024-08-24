@@ -8,5 +8,7 @@ namespace Application.Interfaces
         Task CreateClothing(ClothingCreateDto clothing);
         Task<int?> GetClothingPriceById(int clothingId);
         Task ChangePriceById(int id, int price);
+        Task<IEnumerable<ClothingItemPageDto>> GetAllWithPagination(ClothingPaginationFilterDto paginationFilterDto);
+        Task<int> GetCount(int? typeId, int? sizeId);
     }
 }
