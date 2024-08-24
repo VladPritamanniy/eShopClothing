@@ -24,7 +24,7 @@ namespace  Web.Areas.Identity.Pages.Account.Manage
 
         public static string? ProductsNavClass(ViewContext viewContext) => PageNavClass(viewContext, Products);
 
-        public static string? PageNavClass(ViewContext viewContext, params string[] page)
+        private static string? PageNavClass(ViewContext viewContext, params string[] page)
         {
             var activePage = viewContext.ViewData["ActivePage"] as string
                              ?? System.IO.Path.GetFileNameWithoutExtension(viewContext.ActionDescriptor.DisplayName);

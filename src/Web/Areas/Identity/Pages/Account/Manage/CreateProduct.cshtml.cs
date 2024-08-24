@@ -21,14 +21,11 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         }
 
         [BindProperty]
-        public ClothingCreateViewModel Product { get; set; }
+        public ClothingCreateViewModel PageModel { get; set; } = new ClothingCreateViewModel();
 
         public async Task OnGet(string? returnUrl = null)
         {
-            var sizeList = await _productPageService.GetAllSizesClothing();
-            var typeList = await _productPageService.GetAllTypesClothing();
-            ViewData[nameof(ClothingCreateViewModel.SizeId)] = new SelectList(sizeList, nameof(SizeViewModel.Id), nameof(SizeViewModel.Name));
-            ViewData[nameof(ClothingCreateViewModel.TypeId)] = new SelectList(typeList, nameof(TypeViewModel.Id), nameof(TypeViewModel.Name));
+            await InitializePageModel();
         }
 
         public async Task<IActionResult> OnPost(string? returnUrl = null)
@@ -37,33 +34,48 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             try
             {
-                await _productPageService.CreateProduct(Product, User);
+                await _productPageService.CreateProduct(PageModel.Item, User);
                 return LocalRedirect(returnUrl);
             }
             catch (FileSignatureException ex)
             {
                 _logger.LogError(ex.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return Page();
             }
             catch (FileFormatException ex)
             {
                 _logger.LogError(ex.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return Page();
             }
             catch (FileSizeException ex)
             {
                 _logger.LogError(ex.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return Page();
             }
             catch (ArgumentNullException ex)
             {
                 _logger.LogError(ex.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return Page();
             }
+
+            await InitializePageModel();
+            return Page();
+        }
+
+        private async Task InitializePageModel()
+        {
+            var sizeList = await _productPageService.GetAllSizesClothing();
+            var typeList = await _productPageService.GetAllTypesClothing();
+
+            PageModel.Sizes = sizeList
+                .Select(type => new SelectListItem() { Value = type.Id.ToString(), Text = type.Name })
+                .OrderBy(t => t.Text)
+                .ToList();
+
+            PageModel.Types = typeList
+                .Select(type => new SelectListItem() { Value = type.Id.ToString(), Text = type.Name })
+                .OrderBy(t => t.Text)
+                .ToList();
         }
     }
 }

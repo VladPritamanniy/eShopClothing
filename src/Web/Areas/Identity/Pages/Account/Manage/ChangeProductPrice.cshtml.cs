@@ -43,13 +43,13 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             catch (PermissionException e)
             {
                 _logger.LogError(e.Message);
-                return LocalRedirect(returnUrl);
             }
             catch (ArgumentNullException e)
             {
                 _logger.LogError(e.Message);
-                return LocalRedirect(returnUrl);
             }
+
+            return LocalRedirect(returnUrl);
         }
 
         public async Task<IActionResult> OnPost(int id, string? returnUrl = null)
@@ -65,13 +65,13 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             catch (PermissionException e)
             {
                 _logger.LogError(e.Message);
-                return LocalRedirect(returnUrl);
             }
             catch (ArgumentNullException e)
             {
                 _logger.LogError(e.Message);
-                return LocalRedirect(returnUrl);
             }
+
+            return LocalRedirect(returnUrl);
         }
     }
 }

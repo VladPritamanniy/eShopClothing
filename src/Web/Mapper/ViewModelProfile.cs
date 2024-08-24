@@ -8,7 +8,7 @@ namespace Web.Mapper
     {
         public ViewModelProfile()
         {
-            CreateMap<ClothingCreateDto, ClothingCreateViewModel>()
+            CreateMap<ClothingCreateDto, ClothingItemCreateViewModel>()
                 .ForMember(p=>p.Price, d=>d.MapFrom(s=>s.ValidPrice))
                 .ReverseMap();
             CreateMap<SizeDto, SizeViewModel>().ReverseMap();

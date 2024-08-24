@@ -3,42 +3,42 @@
 
 <form method="post" enctype="multipart/form-data" class="form-create-product">
     <div class="form-group">
-        <label asp-for="Product.FormFiles" class="drop-container" id="dropcontainer">
+        <label asp-for="PageModel.Item.FormFiles" class="drop-container" id="dropcontainer">
             <span class="drop-title">Drop files here</span>
             or
-            <input asp-for="Product.FormFiles" type="file" multiple accept="image/png, image/jpeg, image/jpg" id="fileInput">
+            <input asp-for="PageModel.Item.FormFiles" type="file" multiple accept="image/png, image/jpeg, image/jpg" id="fileInput">
         </label>
-        <span asp-validation-for="Product.FormFiles" class="text-danger"></span>
+        <span asp-validation-for="PageModel.Item.FormFiles" class="text-danger"></span>
     </div>
     <div class="container-uploaded-img" id="divForUploadImages"></div>
     <div class="form-group">
-        <label asp-for="Product.Name" class="control-label"></label>
-        <input asp-for="Product.Name" class="form-control" />
-        <span asp-validation-for="Product.Name" class="text-danger"></span>
+        <label asp-for="PageModel.Item.Name" class="control-label"></label>
+        <input asp-for="PageModel.Item.Name" class="form-control" />
+        <span asp-validation-for="PageModel.Item.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Product.Descriprion" class="control-label"></label>
-        <textarea asp-for="Product.Descriprion" class="form-control"></textarea>
-        <span asp-validation-for="Product.Descriprion" class="text-danger"></span>
+        <label asp-for="PageModel.Item.Descriprion" class="control-label"></label>
+        <textarea asp-for="PageModel.Item.Descriprion" class="form-control"></textarea>
+        <span asp-validation-for="PageModel.Item.Descriprion" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Product.Price" class="control-label"></label>
-        <input asp-for="Product.Price" class="form-control" />
-        <span asp-validation-for="Product.Price" class="text-danger"></span>
+        <label asp-for="PageModel.Item.Price" class="control-label"></label>
+        <input asp-for="PageModel.Item.Price" class="form-control" />
+        <span asp-validation-for="PageModel.Item.Price" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Product.TypeId" class="form-label"></label>
-        <select asp-for="Product.TypeId" class="form-control" asp-items="ViewBag.TypeId">
+        <label asp-for="PageModel.Item.TypeId" class="form-label"></label>
+        <select asp-for="PageModel.Item.TypeId" class="form-control" asp-items="@Model.PageModel.Types">
             <option value=""></option>
         </select>
-        <span asp-validation-for="Product.TypeId" class="text-danger"></span>
+        <span asp-validation-for="PageModel.Item.TypeId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Product.SizeId" class="control-label"></label>
-        <select asp-for="Product.SizeId" class="form-control" asp-items="ViewBag.SizeId">
+        <label asp-for="PageModel.Item.SizeId" class="control-label"></label>
+        <select asp-for="PageModel.Item.SizeId" class="form-control" asp-items="@Model.PageModel.Sizes">
             <option value=""></option>
         </select>
-        <span asp-validation-for="Product.SizeId" class="text-danger"></span>
+        <span asp-validation-for="PageModel.Item.SizeId" class="text-danger"></span>
     </div>
     <div>
         <button id="create-product" type="submit" class="w-100 btn btn-lg btn-primary">Create</button>

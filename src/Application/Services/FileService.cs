@@ -9,34 +9,38 @@ namespace Application.Services
 {
     public class FileService : IFileService
     {
-        private static readonly Dictionary<string, List<byte[]>> _fileSignature =
-            new()
-            {
-                { ".jpg", new List<byte[]>
-                    {
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 },
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xDB },
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xEE }
-                    }
-                },
-                { ".jpeg", new List<byte[]>
-                    {
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 },
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 },
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xDB },
-                        new byte[] { 0xFF, 0xD8, 0xFF, 0xEE }
-                    }
-                },
-                { ".png", new List<byte[]>
-                    {
-                        new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }
-                    }
-                },
-            };
+        private static readonly Dictionary<string, List<byte[]>> _fileSignature = new()
+        {
+            { ".jpg", new List<byte[]>
+                {
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xDB },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xEE },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE9 }
+                }
+            },
+            { ".jpeg", new List<byte[]>
+                {
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xDB },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xEE },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 },
+                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE9 }
+                }
+            },
+            { ".png", new List<byte[]>
+                {
+                    new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }
+                }
+            }
+        };
 
         public ImageOptions Options { get; set; }
 
