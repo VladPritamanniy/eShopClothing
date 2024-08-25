@@ -1,5 +1,6 @@
 ﻿html {
   font-size: 14px;
+  overflow-x: hidden;
 }
 
 label {
@@ -331,4 +332,16 @@ header {
 
 .border-none {
   border: none !important;
+}
+
+.catalog-hero {
+  background-image: url("../../img/main_banner.png");
+  background-size: cover;
+  height: 260px;
+  width: 100%;
+}
+
+.catalog-title {
+  position: relative;
+  top: 74.28571px;
 }

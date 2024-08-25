@@ -1,29 +1,40 @@
 ﻿@page
 @model IndexModel
-<div class="main-page-container">
-    <form method="get">
-        <label class="esh-catalog-label" data-title="brand">
-            <select name="@nameof(Model.PageModel.SizeFilterApplied).ToLower()" asp-for="@Model.PageModel.SizeFilterApplied" asp-items="@Model.PageModel.Sizes" class="esh-catalog-filter"></select>
-        </label>
-        <label class="esh-catalog-label" data-title="type">
-            <select name="@nameof(Model.PageModel.TypeFilterApplied).ToLower()" asp-for="@Model.PageModel.TypeFilterApplied" asp-items="@Model.PageModel.Types" class="esh-catalog-filter"></select>
-        </label>
-        <input class="btn btn-success" type="submit" />
-    </form>
-    @if (Model.PageModel.ClothingItems.Any())
-    {
-        <partial name="_pagination" for="PageModel.PaginationInfo"/>
-        <div class="home-items-container">
-            @foreach (var item in Model.PageModel.ClothingItems)
-            {
-                <partial name="_product" for="@item"/>
-            }
-        </div>
-    }
-    else
-    {
-        <div>
-            THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
-        </div>
-    }
+
+<section class="catalog-hero">
+    <div class="container">
+        <img class="catalog-title" src="~/img/main_banner_text.png" />
+    </div>
+</section>
+
+<div class="container">
+
+    <div class="main-page-container">
+        <form method="get">
+            <label class="esh-catalog-label" data-title="brand">
+                <select name="@nameof(Model.PageModel.SizeFilterApplied).ToLower()" asp-for="@Model.PageModel.SizeFilterApplied" asp-items="@Model.PageModel.Sizes" class="esh-catalog-filter"></select>
+            </label>
+            <label class="esh-catalog-label" data-title="type">
+                <select name="@nameof(Model.PageModel.TypeFilterApplied).ToLower()" asp-for="@Model.PageModel.TypeFilterApplied" asp-items="@Model.PageModel.Types" class="esh-catalog-filter"></select>
+            </label>
+            <input class="btn btn-success" type="submit"/>
+        </form>
+        @if (Model.PageModel.ClothingItems.Any())
+        {
+            <partial name="_pagination" for="PageModel.PaginationInfo"/>
+            <div class="home-items-container">
+                @foreach (var item in Model.PageModel.ClothingItems)
+                {
+                    <partial name="_product" for="@item"/>
+                }
+            </div>
+        }
+        else
+        {
+            <div>
+                THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+            </div>
+        }
+    </div>
+
 </div>

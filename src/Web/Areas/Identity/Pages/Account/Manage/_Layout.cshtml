@@ -9,15 +9,19 @@
     }
 }
 
-<div>
-    <div class="row">
-        <div>
-            <partial name="_ManageNav" />
-        </div>
-        <div>
-            @RenderBody()
+<div class="container">
+
+    <div>
+        <div class="row">
+            <div>
+                <partial name="_ManageNav"/>
+            </div>
+            <div>
+                @RenderBody()
+            </div>
         </div>
     </div>
+
 </div>
 
 @section Scripts {
