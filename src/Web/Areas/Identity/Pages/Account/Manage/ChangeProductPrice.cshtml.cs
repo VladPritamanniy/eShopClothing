@@ -54,6 +54,11 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPost(int id, string? returnUrl = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             returnUrl ??= Url.Content("~/");
             try
             {
@@ -71,7 +76,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 _logger.LogError(e.Message);
             }
 
-            return LocalRedirect(returnUrl);
+            return Page();
         }
     }
 }

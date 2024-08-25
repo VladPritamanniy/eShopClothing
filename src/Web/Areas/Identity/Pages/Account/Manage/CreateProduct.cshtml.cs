@@ -30,6 +30,12 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPost(string? returnUrl = null)
         {
+            if (!ModelState.IsValid)
+            {
+                await InitializePageModel();
+                return Page();
+            }
+
             returnUrl ??= Url.Content("~/");
 
             try

@@ -20,7 +20,7 @@ namespace Web.ViewModels
 
         [Required]
         [Display(Name = "Price")]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         [Display(Name = "File")]

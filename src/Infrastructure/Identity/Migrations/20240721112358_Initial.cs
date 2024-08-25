@@ -193,8 +193,8 @@ namespace Infrastructure.Migrations
                     Descriprion = table.Column<string>(type: "text", nullable: false),
                     SizeId = table.Column<int>(type: "integer", nullable: false),
                     TypeId = table.Column<int>(type: "integer", nullable: false),
-                    ValidPrice = table.Column<int>(type: "integer", nullable: true),
-                    OldPrice = table.Column<int>(type: "integer", nullable: true),
+                    ValidPrice = table.Column<decimal>(type: "numeric", nullable: true),
+                    OldPrice = table.Column<decimal>(type: "numeric", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: DateTime.UtcNow),
                     DayOfSold = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "text", nullable: false)

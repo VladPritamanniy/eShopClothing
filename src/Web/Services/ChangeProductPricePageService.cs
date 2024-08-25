@@ -14,14 +14,14 @@ namespace Web.Services
             _clothingService = clothingService;
         }
 
-        public async Task<int?> GetProductPrice(int productId, string userId)
+        public async Task<decimal?> GetProductPrice(int productId, string userId)
         {
             await _permissionService.IsProductOwner(productId, userId);
             var productPrice = await _clothingService.GetClothingPriceById(productId);
             return productPrice;
         }
 
-        public async Task ChangePrice(int productId, int productPrice, string userId)
+        public async Task ChangePrice(int productId, decimal productPrice, string userId)
         {
             await _permissionService.IsProductOwner(productId, userId);
             await _clothingService.ChangePriceById(productId, productPrice);

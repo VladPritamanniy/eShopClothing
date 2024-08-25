@@ -33,7 +33,7 @@ namespace Application.Services
             await _clothingRepository.SaveChangesAsync();
         }
 
-        public async Task<int?> GetClothingPriceById(int id)
+        public async Task<decimal?> GetClothingPriceById(int id)
         {
             var specification = new ClothingByIdSpecification(id);
             var entity = await _clothingRepository.FirstOrDefaultAsync(specification);
@@ -44,7 +44,7 @@ namespace Application.Services
             return entity.OldPrice;
         }
 
-        public async Task ChangePriceById(int id, int price)
+        public async Task ChangePriceById(int id, decimal price)
         {
             var specification = new ClothingByIdSpecification(id);
             var entity = await _clothingRepository.FirstOrDefaultAsync(specification);

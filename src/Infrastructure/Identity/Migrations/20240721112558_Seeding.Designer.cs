@@ -51,8 +51,8 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("OldPrice")
-                        .HasColumnType("integer");
+                    b.Property<decimal?>("OldPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<int>("SizeId")
                         .HasColumnType("integer");
@@ -60,8 +60,8 @@ namespace Infrastructure.Migrations
                     b.Property<int>("TypeId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ValidPrice")
-                        .HasColumnType("integer");
+                    b.Property<decimal?>("ValidPrice")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
