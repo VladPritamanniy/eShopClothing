@@ -30,29 +30,28 @@ namespace Application.Services
         {
             var mapped = _mapper.Map<Clothing>(clothing);
             await _clothingRepository.AddAsync(mapped);
-            await _clothingRepository.SaveChangesAsync();
         }
 
-        public async Task<decimal?> GetClothingPriceById(int id)
+        public async Task<ClothingDto> GetById(int id)
         {
             var specification = new ClothingByIdSpecification(id);
             var entity = await _clothingRepository.FirstOrDefaultAsync(specification);
+
             if (entity == null)
-            {
                 throw new ArgumentNullException($"{entity}", $"Cannon get entity by id = {id}.");
-            }
-            return entity.OldPrice;
+
+            var mapped = _mapper.Map<ClothingDto>(entity);
+            return mapped;
         }
 
         public async Task ChangePriceById(int id, decimal price)
         {
             var specification = new ClothingByIdSpecification(id);
             var entity = await _clothingRepository.FirstOrDefaultAsync(specification);
-            if (entity == null)
-            {
-                throw new ArgumentNullException($"{entity}", $"Cannon get entity by id = {id}.");
-            }
 
+            if (entity == null)
+                throw new ArgumentNullException($"{entity}", $"Cannon get entity by id = {id}.");
+            
             entity.ValidPrice = price;
             await _clothingRepository.SaveChangesAsync();
         }
@@ -70,7 +69,7 @@ namespace Application.Services
             return mapped;
         }
 
-        public async Task<int> GetCount(int? typeId, int? sizeId)
+        public async Task<int> GetCountFilteredProducts(int? typeId, int? sizeId)
         {
             var specification = new ClothingFilterSpecification(typeId, sizeId);
             return await _clothingRepository.CountAsync(specification);

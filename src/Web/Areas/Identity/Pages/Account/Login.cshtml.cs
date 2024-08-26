@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Infrastructure.Identity;
 using Microsoft.Extensions.Options;
 using Core.Options;
+using Application.Interfaces;
 
 namespace Web.Areas.Identity.Pages.Account
 {
@@ -14,13 +15,20 @@ namespace Web.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IBasketService _basketService;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, IOptions<LoginOptions> options)
+        public LoginModel(
+            SignInManager<ApplicationUser> signInManager,
+            ILogger<LoginModel> logger,
+            UserManager<ApplicationUser> userManager,
+            IOptions<LoginOptions> options,
+            IBasketService basketService)
         {
             _signInManager = signInManager;
             _logger = logger;
             _userManager = userManager;
             Options = options.Value;
+            _basketService = basketService;
         }
 
         [BindProperty]
@@ -87,9 +95,17 @@ namespace Web.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-                DeleteLoginAttemptsFromCookie();
                 _logger.LogInformation("User logged in.");
-                return LocalRedirect(returnUrl);
+                DeleteLoginAttemptsFromCookie();
+                try
+                {
+                    await TransferAnonymousBasketToUser(Input?.Email);
+                    return LocalRedirect(returnUrl);
+                }
+                catch (ArgumentNullException e)
+                {
+                    ModelState.AddModelError(string.Empty, e.Message);
+                }
             }
             if (result.RequiresTwoFactor)
             {
@@ -97,8 +113,8 @@ namespace Web.Areas.Identity.Pages.Account
             }
             if (result.IsLockedOut)
             {
-                DeleteLoginAttemptsFromCookie();
                 _logger.LogWarning("User account locked out.");
+                DeleteLoginAttemptsFromCookie();
                 ModelState.AddModelError(string.Empty, "You are blocked. Wait 5 minutes and try again.");
                 return Page();
             }
@@ -136,6 +152,22 @@ namespace Web.Areas.Identity.Pages.Account
             if (HttpContext.Request.Cookies.ContainsKey(nameof(Options.MaxFailedAccessAttempts)))
             {
                 HttpContext.Response.Cookies.Delete(nameof(Options.MaxFailedAccessAttempts));
+            }
+        }
+
+        private async Task TransferAnonymousBasketToUser(string? userName)
+        {
+            if (Request.Cookies.ContainsKey(Constants.BASKET_COOKIENAME))
+            {
+                var anonymousId = Request.Cookies[Constants.BASKET_COOKIENAME];
+                if (Guid.TryParse(anonymousId, out _))
+                {
+                    if (userName == null)
+                        throw new ArgumentNullException($"Required input email was empty.");
+                    
+                    await _basketService.TransferBasket(anonymousId, userName);
+                }
+                Response.Cookies.Delete(Constants.BASKET_COOKIENAME);
             }
         }
     }

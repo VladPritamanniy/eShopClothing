@@ -5,6 +5,8 @@ namespace Infrastructure.Repositories.Base
 {
     public class SpecificationEvaluator : ISpecificationEvaluator
     {
+        public static SpecificationEvaluator Default { get; } = new SpecificationEvaluator();
+
         public IQueryable<TResult> GetQuery<T, TResult>(IQueryable<T> query, ISpecification<T, TResult> specification) where T : class
         {
             query = GetQuery(query, (ISpecification<T>)specification);

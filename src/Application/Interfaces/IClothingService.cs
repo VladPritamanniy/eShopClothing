@@ -6,9 +6,9 @@ namespace Application.Interfaces
     {
         Task<IEnumerable<ClothingAccountDto>> GetAllUserProductByUserId(string id);
         Task CreateClothing(ClothingCreateDto clothing);
-        Task<decimal?> GetClothingPriceById(int clothingId);
+        Task<ClothingDto> GetById(int clothingId);
         Task ChangePriceById(int id, decimal price);
         Task<IEnumerable<ClothingItemPageDto>> GetAllWithPagination(ClothingPaginationFilterDto paginationFilterDto);
-        Task<int> GetCount(int? typeId, int? sizeId);
+        Task<int> GetCountFilteredProducts(int? typeId, int? sizeId);
     }
 }

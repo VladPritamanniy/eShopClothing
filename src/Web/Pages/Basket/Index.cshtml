@@ -1,0 +1,18 @@
+﻿@page
+@model IndexModel
+
+<div class="container">
+    @foreach (var item in @Model.PageModel.BasketItems)
+    {
+        <div>
+            <label>@item.Id</label>
+            <label>@item.Name</label>
+            <label>@item.Quantity</label>
+            <div>
+                <label>@item.ValidPrice</label>
+                <label>@item.OldPrice</label>
+            </div>
+            <label>@item.SizeName</label>
+        </div>
+    }
+</div>

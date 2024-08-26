@@ -5,15 +5,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Base
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepositoryBase<T> where T : class
     {
         private readonly AppIdentityDbContext _dbContext;
-        private readonly ISpecificationEvaluator specificationEvaluator;
+        private readonly ISpecificationEvaluator _specificationEvaluator;
+
+        public Repository(AppIdentityDbContext dbContext)
+            : this(dbContext, SpecificationEvaluator.Default)
+        {
+            _dbContext = dbContext;
+        }
 
         public Repository(AppIdentityDbContext dbContext, ISpecificationEvaluator specificationEvaluator)
         {
             _dbContext = dbContext;
-            this.specificationEvaluator = specificationEvaluator;
+            this._specificationEvaluator = specificationEvaluator;
         }
 
         public async Task<IReadOnlyList<T>> GetAll()
@@ -21,14 +27,14 @@ namespace Infrastructure.Repositories.Base
             return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public async Task<IReadOnlyList<T>> ToListAsync(ISpecification<T> spec)
+        public async Task<IReadOnlyList<T>> ToListAsync(ISpecification<T> specification)
         {
-            return await ApplySpecification(spec).ToListAsync();
+            return await ApplySpecification(specification).ToListAsync();
         }
 
-        public async Task<IReadOnlyList<TResult>> ToListAsync<TResult>(ISpecification<T, TResult> spec)
+        public async Task<IReadOnlyList<TResult>> ToListAsync<TResult>(ISpecification<T, TResult> specification)
         {
-            return await ApplySpecification(spec).ToListAsync();
+            return await ApplySpecification(specification).ToListAsync();
         }
 
         public async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification)
@@ -61,9 +67,9 @@ namespace Infrastructure.Repositories.Base
             return await _dbContext.Set<T>().CountAsync();
         }
 
-        public async Task<TResult[]?> ToArrayAsync<TResult>(ISpecification<T, TResult> spec)
+        public async Task<TResult[]?> ToArrayAsync<TResult>(ISpecification<T, TResult> specification)
         {
-            return await ApplySpecification(spec).ToArrayAsync();
+            return await ApplySpecification(specification).ToArrayAsync();
         }
 
         public async Task<int> SaveChangesAsync()
@@ -79,28 +85,36 @@ namespace Infrastructure.Repositories.Base
         public async Task AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
+            await SaveChangesAsync();
         }
 
         public virtual async Task AddRangeAsync(IEnumerable<T> entities)
         {
             _dbContext.Set<T>().AddRange(entities);
-            await SaveChangesAsync(); ;
+            await SaveChangesAsync();
         }
 
-        public async Task Delete(T entity)
+        public async Task UpdateAsync(T entity)
+        {
+            _dbContext.Set<T>().Update(entity);
+
+            await SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(T entity)
         {
             _dbContext.Set<T>().Remove(entity);
             await SaveChangesAsync();
         }
 
-        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
-            return specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
+            return _specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), specification);
         }
 
-        private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> spec)
+        private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
         {
-            return specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
+            return _specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), specification);
         }
     }
 }

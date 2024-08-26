@@ -9,17 +9,29 @@ namespace Application.Mapper
     {
         public DtoProfile()
         {
+            CreateMap<Clothing, ClothingDto>().ReverseMap();
             CreateMap<Clothing, ClothingAccountDto>().ReverseMap();
             CreateMap<Clothing, ClothingCreateDto>().ReverseMap();
             CreateMap<Clothing, ClothingItemPageDto>()
-                .ForMember(d => d.Image, opt => opt.MapFrom(src => src.Images.FirstOrDefault()!.Value))
-                .ForMember(d => d.Price, opt => opt.MapFrom(src => src.ValidPrice))
-                .ForMember(d => d.SizeName, opt => opt.MapFrom(src => src.Size.Name))
-                .ForMember(d => d.TypeName, opt => opt.MapFrom(src => src.Type.Name))
+                .ForMember(d => d.Image, e => e.MapFrom(m => m.Images.FirstOrDefault()!.Value))
+                .ForMember(d => d.Price, e => e.MapFrom(m => m.ValidPrice))
+                .ForMember(d => d.SizeName, e => e.MapFrom(m => m.Size.Name))
                 .ReverseMap();
+
             CreateMap<Size, SizeDto>().ReverseMap();
+
             CreateMap<Type, TypeDto>().ReverseMap();
+
             CreateMap<Image, ImageDto>().ReverseMap();
+
+            CreateMap<Basket, BasketDto>().ReverseMap();
+            CreateMap<BasketItem, BasketItemDto>()
+                .ForMember(d => d.Name, e => e.MapFrom(m => m.Clothing.Name))
+                .ForMember(d=>d.ValidPrice, e=>e.MapFrom(m=>m.Clothing.ValidPrice))
+                .ForMember(d => d.OldPrice, e => e.MapFrom(m => m.Clothing.OldPrice))
+                .ForMember(d => d.Image, e => e.MapFrom(m => m.Clothing.Images.FirstOrDefault()!.Value))
+                .ForMember(d => d.SizeName, e => e.MapFrom(m => m.Clothing.Size.Name))
+                .ReverseMap();
         }
     }
 }

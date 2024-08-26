@@ -1,0 +1,19 @@
+﻿@{
+    var isError = TempData.Peek("ErrorMessage") != null;
+    var isSuccess = TempData.Peek("SuccessMessage") != null;
+    var message = isError ? TempData["ErrorMessage"] : (isSuccess ? TempData["SuccessMessage"] : string.Empty);
+    var alertClass = isError ? "alert-danger" : (isSuccess ? "alert-success" : string.Empty);
+
+    if (isError || isSuccess)
+    {
+        <div class="alert @alertClass alert-dismissible fade show" role="alert">
+            <strong>@message</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <script>
+                $(".alert").alert();
+            </script>
+        </div>
+    }
+}

@@ -38,7 +38,9 @@ namespace Web
 
             builder.AddIdentity();
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.AddRazorPages();
+            builder.Services.AddRazorPages()
+                .AddSessionStateTempDataProvider();
+            builder.Services.AddSession();
             builder.Services.Configure<RouteOptions>(options =>
             {
                 options.AppendTrailingSlash = false;
@@ -53,12 +55,15 @@ namespace Web
             builder.Services.AddScoped<ITypeService, TypeService>();
             builder.Services.AddScoped<ISizeService, SizeService>();
             builder.Services.AddScoped<IFileService, FileService>();
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
             builder.Services.AddScoped<ISpecificationEvaluator, SpecificationEvaluator>();
             builder.Services.AddScoped<IProductPageService, ProductPageService>();
             builder.Services.AddScoped<IChangeProductPricePageService, ChangeProductPricePageService>();
             builder.Services.AddScoped<IPermissionService, PermissionService>();
             builder.Services.AddScoped<IClothingPageService, ClothingPageService>();
+            builder.Services.AddScoped<IBasketPageService, BasketPageService>();
+            builder.Services.AddScoped<IBasketService, BasketService>();
             //builder.Services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")));
 
             builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection(nameof(AuthMessageSenderOptions)));
@@ -84,6 +89,7 @@ namespace Web
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.MapRazorPages();
 

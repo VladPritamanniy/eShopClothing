@@ -8,10 +8,10 @@ namespace Application.Services
 {
     public class TypeService : ITypeService
     {
-        private readonly IRepository<Type> _typeRepository;
+        private readonly IReadRepository<Type> _typeRepository;
         private readonly IMapper _mapper;
 
-        public TypeService(IRepository<Type> typeRepository, IMapper mapper)
+        public TypeService(IReadRepository<Type> typeRepository, IMapper mapper)
         {
             _typeRepository = typeRepository;
             _mapper = mapper;

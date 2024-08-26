@@ -75,7 +75,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             PageModel.Sizes = sizeList
                 .Select(type => new SelectListItem() { Value = type.Id.ToString(), Text = type.Name })
-                .OrderBy(t => t.Text)
+                .OrderBy(t => t.Value)
                 .ToList();
 
             PageModel.Types = typeList

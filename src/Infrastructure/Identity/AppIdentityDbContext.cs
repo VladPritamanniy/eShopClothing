@@ -17,12 +17,11 @@ namespace Infrastructure.Identity
         }
 
         public DbSet<Clothing> Clothing { get; set; }
-
         public DbSet<Type> Type { get; set; }
-
         public DbSet<Size> Size { get; set; }
-
         public DbSet<Image> Image { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
+        public DbSet<BasketItem> BasketItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -3,19 +3,26 @@
 
 <section class="catalog-hero">
     <div class="container">
-        <img class="catalog-title" src="~/img/main_banner_text.png" />
+        <img class="img-banner" src="~/img/main_banner_text.png" />
     </div>
 </section>
 
 <div class="container">
-
     <div class="main-page-container">
+        <a class="basketstatus" asp-page="./Basket/Index">
+            <div class="basketstatus-image">
+                <img src="~/img/shopping-cart.png" width="50" height="50" />
+            </div>
+            <div class="basketstatus-badge">
+                @Model.PageModel.BasketItemsCount
+            </div>
+        </a>
         <form method="get">
-            <label class="esh-catalog-label" data-title="brand">
-                <select name="@nameof(Model.PageModel.SizeFilterApplied).ToLower()" asp-for="@Model.PageModel.SizeFilterApplied" asp-items="@Model.PageModel.Sizes" class="esh-catalog-filter"></select>
+            <label>
+                <select name="@nameof(Model.PageModel.SizeFilterApplied).ToLower()" asp-for="@Model.PageModel.SizeFilterApplied" asp-items="@Model.PageModel.Sizes"></select>
             </label>
-            <label class="esh-catalog-label" data-title="type">
-                <select name="@nameof(Model.PageModel.TypeFilterApplied).ToLower()" asp-for="@Model.PageModel.TypeFilterApplied" asp-items="@Model.PageModel.Types" class="esh-catalog-filter"></select>
+            <label>
+                <select name="@nameof(Model.PageModel.TypeFilterApplied).ToLower()" asp-for="@Model.PageModel.TypeFilterApplied" asp-items="@Model.PageModel.Types"></select>
             </label>
             <input class="btn btn-success" type="submit"/>
         </form>
@@ -36,5 +43,4 @@
             </div>
         }
     </div>
-
 </div>

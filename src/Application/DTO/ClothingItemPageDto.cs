@@ -8,7 +8,6 @@ namespace Application.DTO
         public decimal Price { get; set; }
         public DateTime CreationDate { get; set; }
         public string SizeName { get; set; }
-        public string TypeName { get; set; }
         public byte[] Image { get; set; }
     }
 }

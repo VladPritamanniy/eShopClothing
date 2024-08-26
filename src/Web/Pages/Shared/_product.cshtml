@@ -1,6 +1,6 @@
-﻿@model Web.ViewModels.ClothingItemPageViewModel
+﻿@model ClothingItemPageViewModel
 
-<div class="home-item">
+<form asp-page="/Basket/Index" class="home-item" method="post">
     <div class="home-item-container">
         <div class="home-item-img-container">
             <img class="home-item-img" id="itemHomeMainPhoto" src="data:image/png;base64,@Convert.ToBase64String(Model.Image)" width="150" height="180"/>
@@ -18,7 +18,9 @@
                 <label class="home-item-additional-info-item">
                     @Model.SizeName
                 </label>
+                <input class="btn btn-primary" type="submit" value="ADD TO BASKET" />
             </div>
         </div>
     </div>
-</div>
+    <input type="hidden" asp-for="@Model.Id" name="productId" />
+</form>

@@ -5,7 +5,8 @@
         void Add(T entity);
         Task AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
-        Task Delete(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
         Task<int> SaveChangesAsync();
     }
 }

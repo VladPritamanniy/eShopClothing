@@ -11,15 +11,7 @@ namespace Infrastructure.Identity
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<AppIdentityDbContext>();
-                try
-                {
-                    await context.Database.MigrateAsync();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                    throw;
-                }
+                await context.Database.MigrateAsync();
             }
         }
     }
