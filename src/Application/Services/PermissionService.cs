@@ -36,7 +36,7 @@ namespace Application.Services
             if (basket == null)
                 throw new ArgumentNullException($"Cannot get basket by id = {userName}");
 
-            var basketItemSpecification = new BasketItemSpecification(basket.Id);
+            var basketItemSpecification = new BasketItemSpecification(basketItemId);
             var basketItem = await _basketItemRepository.FirstOrDefaultAsync(basketItemSpecification);
             if (basketItem == null)
                 throw new PermissionException();
