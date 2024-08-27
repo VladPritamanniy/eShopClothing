@@ -461,3 +461,6 @@ button.close {
   background-color: white;
   padding: 10px;
 }
+.basket-item .btn-close {
+  opacity: 1;
+}

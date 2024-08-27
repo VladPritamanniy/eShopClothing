@@ -1,5 +1,6 @@
 using Application.Interfaces;
 using AutoMapper;
+using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Web.Interfaces;
@@ -67,6 +68,29 @@ namespace Web.Pages.Basket
 
             ErrorMessage = "Error adding product to cart";
             return LocalRedirect("/Index");
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            if (id <= 0)
+                return Page();
+            try
+            {
+                var username = GetOrSetBasketCookie();
+                await _basketPageService.RemoveProductFromBasket(id, username);
+                SuccessMessage = "Product removed";
+                return LocalRedirect("/Basket/Index");
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.LogError(e.Message);
+            }
+            catch (PermissionException e)
+            {
+                _logger.LogError(e.Message);
+            }
+            ErrorMessage = "Error removing product from cart";
+            return Page();
         }
 
         private string GetOrSetBasketCookie()

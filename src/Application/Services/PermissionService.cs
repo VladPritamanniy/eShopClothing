@@ -9,10 +9,14 @@ namespace Application.Services
     public class PermissionService : IPermissionService
     {
         private readonly IRepository<Clothing> _clothingRepository;
+        private readonly IRepository<Basket> _basketRepository;
+        private readonly IRepository<BasketItem> _basketItemRepository;
 
-        public PermissionService(IRepository<Clothing> clothingRepository)
+        public PermissionService(IRepository<Clothing> clothingRepository, IRepository<Basket> basketRepository, IRepository<BasketItem> basketItemRepository)
         {
             _clothingRepository = clothingRepository;
+            _basketRepository = basketRepository;
+            _basketItemRepository = basketItemRepository;
         }
 
         public async Task IsProductOwner(int productId, string userId)
@@ -23,6 +27,21 @@ namespace Application.Services
             {
                 throw new PermissionException();
             }
+        }
+
+        public async Task<int> IsBasketItemOwner(int basketItemId, string userName)
+        {
+            var basketSpecification = new BasketWithItemsSpecification(userName);
+            var basket = await _basketRepository.FirstOrDefaultAsync(basketSpecification);
+            if (basket == null)
+                throw new ArgumentNullException($"Cannot get basket by id = {userName}");
+
+            var basketItemSpecification = new BasketItemSpecification(basket.Id);
+            var basketItem = await _basketItemRepository.FirstOrDefaultAsync(basketItemSpecification);
+            if (basketItem == null)
+                throw new PermissionException();
+
+            return basketItem.Id;
         }
     }
 }

@@ -526,5 +526,9 @@ button.close {
         border-radius: 10px;
         background-color: white;
         padding: 10px;
+
+        .btn-close {
+            opacity: 1;
+        }
     }
 }

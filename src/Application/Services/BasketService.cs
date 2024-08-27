@@ -10,14 +10,16 @@ namespace Application.Services
     public class BasketService : IBasketService
     {
         private readonly IRepository<Basket> _basketRepository;
+        private readonly IRepository<BasketItem> _basketItemRepository;
         private readonly IRepository<Clothing> _clothingRepository;
         private readonly IMapper _mapper;
 
-        public BasketService(IRepository<Basket> basketRepository, IMapper mapper, IRepository<Clothing> clothingRepository)
+        public BasketService(IRepository<Basket> basketRepository, IRepository<BasketItem> basketItemRepository, IRepository<Clothing> clothingRepository, IMapper mapper)
         {
             _basketRepository = basketRepository;
-            _mapper = mapper;
+            _basketItemRepository = basketItemRepository;
             _clothingRepository = clothingRepository;
+            _mapper = mapper;
         }
 
         public async Task<BasketDto?> GetBasketByUserName(string userName)
@@ -100,6 +102,16 @@ namespace Application.Services
             var entity = await _basketRepository.FirstOrDefaultAsync(specification);
             if (entity == null) return 0;
             return entity.BasketItems.Count;
+        }
+
+        public async Task DeleteBasketItemById(int basketItemId)
+        {
+            var specification = new BasketItemSpecification(basketItemId);
+            var entity = await _basketItemRepository.FirstOrDefaultAsync(specification);
+            if (entity == null)
+                throw new ArgumentNullException($"Cannot get basketItem by id = {basketItemId}");
+
+            await _basketItemRepository.DeleteAsync(entity);
         }
     }
 }

@@ -5,7 +5,7 @@
     <h1>Basket</h1>
     @foreach (var item in @Model.PageModel.BasketItems)
     {
-        <div class="basket-item">
+        <form method="post" class="basket-item">
             <img class="home-item-img" id="itemHomeMainPhoto" src="data:image/png;base64,@Convert.ToBase64String(item.Image)" width="150" height="180"/>
             <label>@item.Name</label>
             <input type="number" value="@item.Quantity"/>
@@ -13,7 +13,9 @@
                 <partial name="_price" for="@item.Price"/>
             </div>
             <label>@item.SizeName</label>
-        </div>
+            <button type="submit" class="btn-close" asp-page-handler="Delete"></button>
+            <input type="hidden" asp-for="@item.Id" name="id" />
+        </form>
     }
 </div>
 

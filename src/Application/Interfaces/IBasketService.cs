@@ -9,5 +9,6 @@ namespace Application.Interfaces
         Task<BasketDto> AddToBasket(string userName, int clothingId, int quantity = 1);
         Task TransferBasket(string anonymousId, string userName);
         Task<int> GetCountProductsById(string userName);
+        Task DeleteBasketItemById(int basketItemId);
     }
 }
