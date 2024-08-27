@@ -181,33 +181,10 @@ a {
             justify-content: space-between;
             align-items: center;
 
-            .price {
+            .price-section {
                 display: flex;
                 align-items: center;
-                gap: 20px;
-
-                .discount {
-                    display: grid;
-
-                    .old-price-label {
-                        font-size: 14px;
-                        font-weight: 400;
-                        text-decoration: line-through;
-                        color: grey;
-                    }
-
-                    .valid-price-label {
-                        font-size: 24px;
-                        font-weight: 500;
-                        color: red;
-                    }
-                }
-
-                .price-without-discount {
-                    font-size: 24px;
-                    font-weight: 500;
-                    color: black;
-                }
+                width: fit-content;
             }
         }
     }
@@ -225,8 +202,36 @@ a {
         }
     }
 }
+.price {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .discount {
+        display: grid;
+
+        .old-price-label {
+            font-size: 14px;
+            font-weight: 400;
+            text-decoration: line-through;
+            color: grey;
+        }
+
+        .valid-price-label {
+            font-size: 24px;
+            font-weight: 500;
+            color: red;
+        }
+    }
+
+    .price-without-discount {
+        font-size: 24px;
+        font-weight: 500;
+        color: black;
+    }
+}
 .account-navigation{
-    margin-bottom: 15px;
+    margin: 15px 0px;
 }
 .form-create-product {
     gap: 10px;
@@ -305,6 +310,17 @@ a {
     }
 }
 .main-page-container {
+    .filters {
+        width: max-content;
+        align-items: center;
+        display: flex;
+        gap: 10px;
+    }
+
+    .page-navigation {
+        margin: 12px 0px;
+    }
+
     .home-items-container {
         gap: 6px;
         display: flex;
@@ -372,6 +388,7 @@ a {
 }
 .pager {
     margin-bottom: 1rem !important;
+    width: max-content;
 }
 .pager-item--navigable.is-disabled {
     pointer-events: none;
@@ -447,12 +464,24 @@ button.close {
 }
 
 .alert {
+    align-items: center;
+    display: flex;
     position: fixed;
     bottom: 1%;
     right: 1%;
     z-index: 2;
     margin-bottom: 0px;
     padding-right: 0px;
+
+    &-message {
+        font-size: 28px;
+    }
+
+    button {
+        span {
+            font-size: 28px;
+        }
+    }
 }
 .basketstatus {
     cursor: pointer;
@@ -483,5 +512,19 @@ button.close {
         background-color: white;
         color: black;
         transition: all .35s;
+    }
+}
+.basket {
+    margin-top: 20px;
+    gap: 6px;
+    display: grid;
+
+    &-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-radius: 10px;
+        background-color: white;
+        padding: 10px;
     }
 }

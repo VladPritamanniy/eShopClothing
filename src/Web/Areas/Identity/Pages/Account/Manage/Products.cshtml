@@ -1,12 +1,6 @@
 ﻿@page
-@using Web.ViewModels
 @model ProductsModel
-@functions {
-    public bool CheckDiscount(ClothingAccountViewModel item)
-    {
-        return item.OldPrice > item.ValidPrice;
-    }
-}
+
 <a class="btn btn-info" asp-page="./CreateProduct" asp-route-returnUrl="@Model.ReturnUrl">Create product</a>
 
 @foreach (var item in Model.Items)
@@ -23,18 +17,9 @@
                         <img id="ItemPreview" src="data:image/png;base64,@Convert.ToBase64String(stringImg.Value)" width="65" height="80"/>
                     }
                 </div>
-                <div class="price">
-                    @if (CheckDiscount(item))
-                    {
-                        <div class="discount">
-                            <label class="old-price-label">@item.OldPrice $</label>
-                            <label class="valid-price-label">@item.ValidPrice $</label>
-                        </div>
-                    }
-                    else
-                    {
-                        <label class="price-without-discount">@item.ValidPrice $</label>
-                    }
+                <div class="price-section">
+                    <partial name="_price" for="@item.Price" />
+
                     <img onclick="changeVisibilityAdditionalInfo(this, @item.Id)" src="~/img/arrow-down.png" width="20" height="20"/>
                 </div>
             </div>

@@ -9,23 +9,21 @@
 
 <div class="container">
     <div class="main-page-container">
-        <a class="basketstatus" asp-page="./Basket/Index">
-            <div class="basketstatus-image">
-                <img src="~/img/shopping-cart.png" width="50" height="50" />
-            </div>
-            <div class="basketstatus-badge">
-                @Model.PageModel.BasketItemsCount
-            </div>
-        </a>
-        <form method="get">
-            <label>
-                <select name="@nameof(Model.PageModel.SizeFilterApplied).ToLower()" asp-for="@Model.PageModel.SizeFilterApplied" asp-items="@Model.PageModel.Sizes"></select>
-            </label>
-            <label>
-                <select name="@nameof(Model.PageModel.TypeFilterApplied).ToLower()" asp-for="@Model.PageModel.TypeFilterApplied" asp-items="@Model.PageModel.Types"></select>
-            </label>
-            <input class="btn btn-success" type="submit"/>
-        </form>
+        <div class="page-navigation">
+
+            @await Component.InvokeAsync("Basket")
+
+            <form method="get" class="filters">
+                <label>
+                    <select name="@nameof(Model.PageModel.SizeFilterApplied).ToLower()" asp-for="@Model.PageModel.SizeFilterApplied" asp-items="@Model.PageModel.Sizes"></select>
+                </label>
+                <label>
+                    <select name="@nameof(Model.PageModel.TypeFilterApplied).ToLower()" asp-for="@Model.PageModel.TypeFilterApplied" asp-items="@Model.PageModel.Types"></select>
+                </label>
+                <input class="btn btn-success" type="submit" value="Apply"/>
+            </form>
+        </div>
+
         @if (Model.PageModel.ClothingItems.Any())
         {
             <partial name="_pagination" for="PageModel.PaginationInfo"/>
@@ -42,5 +40,8 @@
                 THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
             </div>
         }
+
     </div>
 </div>
+
+<partial name="_alert"/>

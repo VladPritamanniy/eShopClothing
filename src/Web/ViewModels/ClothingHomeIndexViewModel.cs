@@ -10,6 +10,5 @@ namespace Web.ViewModels
         public int? SizeFilterApplied { get; set; }
         public int? TypeFilterApplied { get; set; }
         public PaginationInfoViewModel? PaginationInfo { get; set; }
-        public int? BasketItemsCount { get; set; }
     }
 }

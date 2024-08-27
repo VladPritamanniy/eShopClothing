@@ -1,0 +1,10 @@
+﻿@model BasketComponentViewModel
+
+<a class="basketstatus" asp-page="./Basket/Index">
+    <div class="basketstatus-image">
+        <img src="~/img/shopping-cart.png" width="50" height="50"/>
+    </div>
+    <div class="basketstatus-badge">
+        @Model.ItemsCount
+    </div>
+</a>

@@ -1,18 +1,20 @@
 ﻿@page
 @model IndexModel
 
-<div class="container">
+<div class="basket container">
+    <h1>Basket</h1>
     @foreach (var item in @Model.PageModel.BasketItems)
     {
-        <div>
-            <label>@item.Id</label>
+        <div class="basket-item">
+            <img class="home-item-img" id="itemHomeMainPhoto" src="data:image/png;base64,@Convert.ToBase64String(item.Image)" width="150" height="180"/>
             <label>@item.Name</label>
-            <label>@item.Quantity</label>
+            <input type="number" value="@item.Quantity"/>
             <div>
-                <label>@item.ValidPrice</label>
-                <label>@item.OldPrice</label>
+                <partial name="_price" for="@item.Price"/>
             </div>
             <label>@item.SizeName</label>
         </div>
     }
 </div>
+
+<partial name="_alert"/>

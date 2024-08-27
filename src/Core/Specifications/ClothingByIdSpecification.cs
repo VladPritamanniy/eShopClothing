@@ -8,6 +8,7 @@ namespace Core.Specifications
         public ClothingByIdSpecification(int id)
         {
             AddCriteria(p => p.Id == id);
+            AddInclude(p=>p.Images);
         }
     }
 }

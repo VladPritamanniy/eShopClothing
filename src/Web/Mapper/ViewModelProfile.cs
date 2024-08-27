@@ -11,10 +11,15 @@ namespace Web.Mapper
             CreateMap<ClothingCreateDto, ClothingItemCreateViewModel>()
                 .ForMember(p=>p.Price, d=>d.MapFrom(s=>s.ValidPrice))
                 .ReverseMap();
-            CreateMap<ClothingItemPageDto, ClothingItemPageViewModel>().ReverseMap();
+            CreateMap<ClothingItemPageDto, ClothingItemPageViewModel>()
+                .ForPath(p => p.Price.OldPrice, d => d.MapFrom(s => s.OldPrice))
+                .ForPath(p => p.Price.ValidPrice, d => d.MapFrom(s => s.ValidPrice))
+                .ReverseMap();
             CreateMap<ClothingAccountDto, ClothingAccountViewModel>()
                 .ForMember(p => p.SizeName, d => d.MapFrom(s => s.Size.Name))
                 .ForMember(p => p.TypeName, d => d.MapFrom(s => s.Type.Name))
+                .ForPath(p => p.Price.OldPrice, d => d.MapFrom(s => s.OldPrice))
+                .ForPath(p => p.Price.ValidPrice, d => d.MapFrom(s => s.ValidPrice))
                 .ReverseMap();
 
             CreateMap<SizeDto, SizeViewModel>().ReverseMap();
@@ -24,7 +29,10 @@ namespace Web.Mapper
             CreateMap<ImageDto, ImageViewModel>().ReverseMap();
 
             CreateMap<BasketDto, BasketViewModel>().ReverseMap();
-            CreateMap<BasketItemDto, BasketItemViewModel>().ReverseMap();
+            CreateMap<BasketItemDto, BasketItemViewModel>()
+                .ForPath(p => p.Price.OldPrice, d => d.MapFrom(s => s.OldPrice))
+                .ForPath(p => p.Price.ValidPrice, d => d.MapFrom(s => s.ValidPrice))
+                .ReverseMap();
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿@model PriceViewModel
+
+<div class="price">
+    @if (Model.OldPrice > Model.ValidPrice)
+    {
+        <div class="discount">
+            <label class="old-price-label">@Model.OldPrice $</label>
+            <label class="valid-price-label">@Model.ValidPrice $</label>
+        </div>
+    }
+    else
+    {
+        <label class="price-without-discount">@Model.ValidPrice $</label>
+    }
+</div>
