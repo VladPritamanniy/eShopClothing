@@ -1,0 +1,70 @@
+﻿@page "{id}"
+@model Web.Pages.Product.IndexModel
+
+<div class="container product-details">
+    <div class="left">
+        <div class="swiper-product-details-container">
+            <div class="swiper swiper-product-details">
+                <div class="swiper-wrapper">
+                    @foreach (var item in Model.PageModel.Item.Images)
+                    {
+                        <div class="swiper-slide">
+                            <img src="data:image/png;base64,@Convert.ToBase64String(item.Value)">
+                        </div>
+                    }
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+        <div class="description-container">
+            <ul>
+                <li>@Model.PageModel.Item.SizeName</li>
+                <li>@Model.PageModel.Item.TypeName</li>
+            </ul>
+            <h1>
+                Description
+            </h1>
+            <div class="description">
+                @Model.PageModel.Item.Description
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="price-container">
+            <label>Published in @Model.PageModel.Item.CreationDate.ToString("dd MMM. yyyy", System.Globalization.CultureInfo.InvariantCulture)</label>
+            <h2>@Model.PageModel.Item.Name</h2>
+            <partial name="Shared/_price" for="PageModel.Item.Price"/>
+            <form asp-page="/Basket/Index" method="post">
+                <input class="btn btn-primary" type="submit" value="ADD TO BASKET" />
+                <input type="hidden" asp-for="@Model.PageModel.Item.Id" name="productId" />
+            </form>
+        </div>
+        <div class="seller-info">
+            <h1>Seller...</h1>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const swiper = new Swiper('.swiper', {
+        direction: 'horizontal',
+        loop: true,
+
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+        },
+
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        },
+
+        scrollbar: {
+            el: '.swiper-scrollbar'
+        },
+    });
+</script>

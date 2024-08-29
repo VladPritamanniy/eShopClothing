@@ -83,7 +83,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("DayOfSold")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Descriprion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 

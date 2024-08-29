@@ -13,15 +13,13 @@ namespace Web.Services
         private readonly IMapper _mapper;
         private readonly ISizeService _sizeService;
         private readonly ITypeService _typeService;
-        private readonly IBasketService _basketService;
 
-        public ClothingPageService(IClothingService clothingService, IMapper mapper, ISizeService sizeService, ITypeService typeService, IBasketService basketService)
+        public ClothingPageService(IClothingService clothingService, IMapper mapper, ISizeService sizeService, ITypeService typeService)
         {
             _clothingService = clothingService;
             _mapper = mapper;
             _sizeService = sizeService;
             _typeService = typeService;
-            _basketService = basketService;
         }
 
         public async Task<ClothingHomeIndexViewModel> GetPageItems(int pageNum, int pageSize, int? typeId, int? sizeId)
@@ -55,6 +53,16 @@ namespace Web.Services
             vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages) ? "btn-secondary is-disabled" : "btn-primary";
             vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 1) ? "btn-secondary is-disabled" : "btn-primary";
 
+            return vm;
+        }
+
+        public async Task<ClothingDetailsPageViewModel> GetProductPageInfo(int id)
+        {
+            var product = await _clothingService.GetById(id);
+            var vm = new ClothingDetailsPageViewModel
+            {
+                Item = _mapper.Map<ClothingDetailsViewModel>(product),
+            };
             return vm;
         }
 

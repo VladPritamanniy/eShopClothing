@@ -43,6 +43,10 @@ a {
   text-decoration: none;
 }
 
+h2 {
+  margin: 0;
+}
+
 .login {
   display: flex;
   justify-content: center;
@@ -304,8 +308,14 @@ a {
   justify-content: space-between;
 }
 .main-page-container .home-items-container .home-item .home-item-container .home-item-info-container .home-item-info .home-item-name {
+  color: black;
   font-size: 20px;
   font-weight: 400;
+  height: fit-content;
+}
+.main-page-container .home-items-container .home-item .home-item-container .home-item-info-container .home-item-info .home-item-name:hover {
+  text-decoration: underline;
+  opacity: 0.9;
 }
 .main-page-container .home-items-container .home-item .home-item-container .home-item-info-container .home-item-info .home-item-price {
   font-size: 16px;
@@ -463,4 +473,105 @@ button.close {
 }
 .basket-item .btn-close {
   opacity: 1;
+}
+
+.product-details {
+  display: grid;
+  width: 100%;
+  background-color: inherit;
+  grid-template-columns: repeat(12, 1fr);
+  grid-column-gap: 16px;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  margin-top: 20px;
+}
+.product-details .left {
+  grid-column: span 8;
+}
+.product-details .left .swiper-product-details-container {
+  padding: 20px;
+  background-color: white;
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 16px;
+}
+.product-details .left .swiper-product-details-container .swiper-product-details {
+  margin: 0px !important;
+  width: 100%;
+  height: 100%;
+}
+.product-details .left .swiper-product-details-container .swiper-product-details .swiper-button-prev {
+  color: black;
+}
+.product-details .left .swiper-product-details-container .swiper-product-details .swiper-button-prev:hover {
+  opacity: 0.3;
+  background-color: gray;
+  border-radius: 5px;
+}
+.product-details .left .swiper-product-details-container .swiper-product-details .swiper-button-next {
+  color: black;
+}
+.product-details .left .swiper-product-details-container .swiper-product-details .swiper-button-next:hover {
+  opacity: 0.3;
+  background-color: gray;
+  border-radius: 5px;
+}
+.product-details .left .swiper-product-details-container .swiper-product-details .swiper-wrapper .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-details .left .description-container {
+  padding: 20px;
+  background-color: white;
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+}
+.product-details .left .description-container ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  border-bottom: 1px solid rgb(216, 223, 224);
+}
+.product-details .left .description-container ul li {
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  background-color: #F2F4F5;
+  height: min-content;
+  width: min-content;
+}
+.product-details .right {
+  width: 100%;
+  grid-column: span 4;
+}
+.product-details .right .price-container {
+  padding: 20px;
+  background-color: white;
+  width: fit-content;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  width: 100%;
+}
+.product-details .right .price-container label {
+  white-space: normal;
+}
+.product-details .right .price-container .price {
+  margin: 10px 0px;
+}
+.product-details .right .price-container form input {
+  width: 100%;
+}
+.product-details .right .seller-info {
+  padding: 20px;
+  background-color: white;
+  width: fit-content;
+  border-radius: 5px;
+  width: 100%;
 }

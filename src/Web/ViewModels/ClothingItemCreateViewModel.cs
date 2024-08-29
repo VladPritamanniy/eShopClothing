@@ -8,7 +8,7 @@ namespace Web.ViewModels
         public string Name { get; set; }
 
         [Required]
-        public string Descriprion { get; set; }
+        public string Description { get; set; }
 
         [Required]
         [Display(Name = "Select size")]

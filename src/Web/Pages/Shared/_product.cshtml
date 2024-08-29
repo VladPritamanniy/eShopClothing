@@ -2,14 +2,14 @@
 
 <form asp-page="/Basket/Index" class="home-item" method="post">
     <div class="home-item-container">
-        <div class="home-item-img-container">
+        <a class="home-item-img-container" asp-page="/Product/Index" asp-route-id="@Model.Id">
             <img class="home-item-img" id="itemHomeMainPhoto" src="data:image/png;base64,@Convert.ToBase64String(Model.Image)" width="150" height="180"/>
-        </div>
+        </a>
         <div class="home-item-info-container">
             <div class="home-item-info">
-                <label class="home-item-name">
+                <a class="home-item-name" asp-page="/Product/Index" asp-route-id="@Model.Id">
                     @Model.Name
-                </label>
+                </a>
                 <label class="home-item-price">
                     <partial name="_price" for="Price"/>
                 </label>

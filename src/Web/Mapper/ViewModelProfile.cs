@@ -21,6 +21,10 @@ namespace Web.Mapper
                 .ForPath(p => p.Price.OldPrice, d => d.MapFrom(s => s.OldPrice))
                 .ForPath(p => p.Price.ValidPrice, d => d.MapFrom(s => s.ValidPrice))
                 .ReverseMap();
+            CreateMap<ClothingDto, ClothingDetailsViewModel>()
+                .ForPath(p => p.Price.OldPrice, d => d.MapFrom(s => s.OldPrice))
+                .ForPath(p => p.Price.ValidPrice, d => d.MapFrom(s => s.ValidPrice))
+                .ReverseMap();
 
             CreateMap<SizeDto, SizeViewModel>().ReverseMap();
 
