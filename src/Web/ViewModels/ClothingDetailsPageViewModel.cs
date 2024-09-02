@@ -3,6 +3,6 @@
     public class ClothingDetailsPageViewModel
     {
         public ClothingDetailsViewModel Item { get; set; }
-        public int SellerId { get; set; }
+        public bool IsShowSubscriptionButton { get; set; }
     }
 }

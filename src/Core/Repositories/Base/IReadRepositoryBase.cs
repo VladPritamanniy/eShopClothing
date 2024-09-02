@@ -11,8 +11,9 @@ namespace Core.Repositories.Base
         Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification);
         Task<T?> SingleOrDefaultAsync(ISpecification<T> specification);
         Task<TResult?> SingleOrDefaultAsync<TResult>(ISpecification<T, TResult> specification);
-        Task<TResult[]?> ToArrayAsync<TResult>(ISpecification<T, TResult> spec);
         Task<int> CountAsync(ISpecification<T> specification);
         Task<int> CountAsync();
+        Task<TResult[]?> ToArrayAsync<TResult>(ISpecification<T, TResult> spec);
+        Task<bool> AnyAsync(ISpecification<T> specification);
     }
 }

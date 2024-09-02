@@ -72,6 +72,11 @@ namespace Infrastructure.Repositories.Base
             return await ApplySpecification(specification).ToArrayAsync();
         }
 
+        public async Task<bool> AnyAsync(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).AnyAsync();
+        }
+
         public async Task<int> SaveChangesAsync()
         {
             return await _dbContext.SaveChangesAsync();

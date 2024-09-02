@@ -64,6 +64,7 @@ namespace Web
             builder.Services.AddScoped<IClothingPageService, ClothingPageService>();
             builder.Services.AddScoped<IBasketPageService, BasketPageService>();
             builder.Services.AddScoped<IBasketService, BasketService>();
+            builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
             //builder.Services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")));
 
             builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection(nameof(AuthMessageSenderOptions)));

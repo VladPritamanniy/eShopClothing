@@ -1,7 +1,9 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
 using AutoMapper;
+using Core.Exceptions.Subscription;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using StackExchange.Redis;
 using Web.Interfaces;
 using Web.ViewModels;
 
@@ -13,13 +15,15 @@ namespace Web.Services
         private readonly IMapper _mapper;
         private readonly ISizeService _sizeService;
         private readonly ITypeService _typeService;
+        private readonly ISubscriptionService _subscriptionService;
 
-        public ClothingPageService(IClothingService clothingService, IMapper mapper, ISizeService sizeService, ITypeService typeService)
+        public ClothingPageService(IClothingService clothingService, IMapper mapper, ISizeService sizeService, ITypeService typeService, ISubscriptionService subscriptionService)
         {
             _clothingService = clothingService;
             _mapper = mapper;
             _sizeService = sizeService;
             _typeService = typeService;
+            _subscriptionService = subscriptionService;
         }
 
         public async Task<ClothingHomeIndexViewModel> GetPageItems(int pageNum, int pageSize, int? typeId, int? sizeId)
@@ -56,14 +60,30 @@ namespace Web.Services
             return vm;
         }
 
-        public async Task<ClothingDetailsPageViewModel> GetProductPageInfo(int id)
+        public async Task<ClothingDetailsPageViewModel> GetProductPageInfo(int productId, string? userId)
         {
-            var product = await _clothingService.GetById(id);
+            var product = await _clothingService.GetById(productId);
             var vm = new ClothingDetailsPageViewModel
             {
-                Item = _mapper.Map<ClothingDetailsViewModel>(product),
+                Item = _mapper.Map<ClothingDetailsViewModel>(product)
             };
+
+            if (userId == null || userId == product.ApplicationUserId)
+                return vm;
+
+            vm.IsShowSubscriptionButton = !await _subscriptionService.CheckSubscriptionIfExist(userId!, product.ApplicationUserId);
             return vm;
+        }
+
+        public async Task Subscribe(int productId, string? userId)
+        {
+            var product = await _clothingService.GetById(productId);
+            var isSubscribed = await _subscriptionService.CheckSubscriptionIfExist(userId, product.ApplicationUserId);
+
+            if (userId == product.ApplicationUserId || isSubscribed)
+                throw new SubscriptionExeption();
+
+            await _subscriptionService.Subscribe(userId, product.ApplicationUserId);
         }
 
         private async Task<List<SelectListItem>> GetTypes()

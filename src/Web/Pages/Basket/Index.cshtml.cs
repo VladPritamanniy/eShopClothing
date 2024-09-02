@@ -47,7 +47,7 @@ namespace Web.Pages.Basket
             return LocalRedirect("/Index");
         }
 
-        public async Task<IActionResult> OnPost(int productId = 0)
+        public async Task<IActionResult> OnPost(int productId)
         {
             if (productId <= 0)
                 return LocalRedirect("/Index");

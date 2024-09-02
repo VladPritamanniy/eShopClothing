@@ -43,10 +43,17 @@
         </div>
         <div class="seller-info">
             <h1>Seller...</h1>
+            @if (Model.PageModel.IsShowSubscriptionButton)
+            {
+                <form method="post">
+                    <input class="btn btn-primary" type="submit" value="SUBSCRIBE TO THE SELLER" />
+                    <input type="hidden" asp-for="@Model.PageModel.Item.Id" name="id" />
+                </form>
+            }
         </div>
     </div>
 </div>
-
+<partial name="_alert" />
 
 <script>
     const swiper = new Swiper('.swiper', {
