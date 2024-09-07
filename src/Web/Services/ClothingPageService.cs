@@ -3,7 +3,6 @@ using Application.Interfaces;
 using AutoMapper;
 using Core.Exceptions.Subscription;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using StackExchange.Redis;
 using Web.Interfaces;
 using Web.ViewModels;
 

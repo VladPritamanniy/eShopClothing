@@ -15,5 +15,6 @@ namespace Core.Repositories.Base
         Task<int> CountAsync();
         Task<TResult[]?> ToArrayAsync<TResult>(ISpecification<T, TResult> spec);
         Task<bool> AnyAsync(ISpecification<T> specification);
+        Task<List<string?>> GetAllUserSubscribersByUserId(string userId);
     }
 }

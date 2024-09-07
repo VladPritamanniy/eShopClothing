@@ -121,5 +121,22 @@ namespace Infrastructure.Repositories.Base
         {
             return _specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), specification);
         }
+
+        public async Task<List<string?>> GetAllUserSubscribersByUserId(string userId)
+        {
+            var subscribersEmails = await _dbContext.Subscriptions
+                .Where(subs => subs.SellerId == userId)
+                .Join(_dbContext.Users,
+                    subs => subs.UserId,
+                    users => users.Id,
+                    (subs, users) => new
+                    {
+                        UserEmail = users.Email
+                    })
+                .Select(result => result.UserEmail)
+                .ToListAsync();
+
+            return subscribersEmails;
+        }
     }
 }

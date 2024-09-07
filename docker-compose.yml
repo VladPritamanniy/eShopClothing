@@ -1,4 +1,15 @@
 services:
+  rabbitmq:
+    container_name: "rabbitmq"
+    image: rabbitmq:3.8-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      # Rabbitmq instance
+      - '5672:5672'
+      # Web interface
+      - '15672:15672'
   # web:
   #   build:
   #     context: .
@@ -14,10 +25,10 @@ services:
   #     - database
   #     - redis
 
-  redis:
-    image: "redis:latest"
-    ports:
-      - "6379:6379"
+  # redis:
+  #   image: "redis:latest"
+  #   ports:
+  #     - "6379:6379"
 
 #   database:
 #     image: "postgres:latest"

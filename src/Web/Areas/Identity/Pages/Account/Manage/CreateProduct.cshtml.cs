@@ -40,7 +40,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             try
             {
-                await _productPageService.CreateProduct(PageModel.Item, User);
+                await _productPageService.CreateProductAndNotifySubscribers(PageModel.Item, User);
                 return LocalRedirect(returnUrl);
             }
             catch (FileSignatureException ex)

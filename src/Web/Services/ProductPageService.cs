@@ -19,6 +19,7 @@ namespace Web.Services
         private readonly IClothingService _clothingService;
         private readonly IFileService _fileService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ISubscriptionService _subscriptionService;
 
         public ImageOptions Options { get; set; }
 
@@ -29,7 +30,8 @@ namespace Web.Services
             IOptions<ImageOptions> options, 
             IClothingService clothingService, 
             IFileService fileService, 
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ISubscriptionService subscriptionService)
         {
             _mapper = mapper;
             _sizeService = sizeService;
@@ -38,17 +40,22 @@ namespace Web.Services
             _clothingService = clothingService;
             _fileService = fileService;
             _userManager = userManager;
+            _subscriptionService = subscriptionService;
         }
 
-        public async Task CreateProduct(ClothingItemCreateViewModel product, ClaimsPrincipal claims)
+        public async Task CreateProductAndNotifySubscribers(ClothingItemCreateViewModel product, ClaimsPrincipal claims)
         {
-            var mapped = _mapper.Map<ClothingCreateDto>(product);
             var user = await _userManager.GetUserAsync(claims);
+
+            var mapped = _mapper.Map<ClothingCreateDto>(product);
             mapped.OldPrice = mapped.ValidPrice;
             mapped.ApplicationUserId = user!.Id;
             mapped.CreationDate = DateTime.UtcNow;
+
             var dto = await _fileService.UploadFiles(mapped, product.FormFiles);
-            await _clothingService.CreateClothing(dto);
+            var created = await _clothingService.CreateClothing(dto);
+
+            await _subscriptionService.NotifySubscribers(created);
         }
 
         public async Task<IEnumerable<SizeViewModel>> GetAllSizesClothing()

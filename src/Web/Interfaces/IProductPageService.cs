@@ -5,7 +5,7 @@ namespace Web.Interfaces
 {
     public interface IProductPageService
     {
-        Task CreateProduct(ClothingItemCreateViewModel product, ClaimsPrincipal claims);
+        Task CreateProductAndNotifySubscribers(ClothingItemCreateViewModel product, ClaimsPrincipal claims);
         Task<IEnumerable<SizeViewModel>> GetAllSizesClothing();
         Task<IEnumerable<TypeViewModel>> GetAllTypesClothing();
     }

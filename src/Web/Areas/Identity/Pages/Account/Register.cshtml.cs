@@ -2,10 +2,11 @@
 using System.Net;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
+using Application.DTO;
+using Application.Interfaces;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -18,21 +19,21 @@ namespace Web.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailNotificationService _emailNotificationService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailNotificationService emailNotificationService)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            _emailNotificationService = emailNotificationService;
         }
 
         [BindProperty]
@@ -98,8 +99,15 @@ namespace Web.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, returnUrl = returnUrl },
                         protocol: Request.Scheme) + $"&code={code}";
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Please confirm your account by clicking here.</a>");
+                    var emailMessage = new List<EmailMessageDto>
+                    {
+                        new() {
+                            Email = Input.Email,
+                            Subject = "Confirm your email",
+                            Body = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
+                        }
+                    };
+                    await _emailNotificationService.PublishAsync(emailMessage);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

@@ -50,7 +50,6 @@ namespace Web
 
             builder.Services.AddAutoMapper(typeof(ViewModelProfile));
             builder.Services.AddAutoMapper(typeof(DtoProfile));
-            builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddScoped<IClothingService, ClothingService>();
             builder.Services.AddScoped<ITypeService, TypeService>();
             builder.Services.AddScoped<ISizeService, SizeService>();
@@ -65,11 +64,14 @@ namespace Web
             builder.Services.AddScoped<IBasketPageService, BasketPageService>();
             builder.Services.AddScoped<IBasketService, BasketService>();
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+            builder.Services.AddSingleton<IEmailNotificationService, EmailNotificationService>();
+            builder.Services.AddHostedService<EmailNotificationService>(sp => (EmailNotificationService)sp.GetRequiredService<IEmailNotificationService>());
             //builder.Services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")));
 
             builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection(nameof(AuthMessageSenderOptions)));
             builder.Services.Configure<LoginOptions>(builder.Configuration.GetSection(nameof(LoginOptions)));
             builder.Services.Configure<ImageOptions>(builder.Configuration.GetSection(nameof(ImageOptions)));
+            builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection(nameof(RabbitMqOptions)));
 
             var app = builder.Build();
             await app.Services.MigrateDatabaseAsync();

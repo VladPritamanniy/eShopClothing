@@ -25,7 +25,6 @@ namespace Admin
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddRazorPages();
 
-            builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection(nameof(AuthMessageSenderOptions)));
 
             var app = builder.Build();

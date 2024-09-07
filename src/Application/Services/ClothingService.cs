@@ -26,10 +26,11 @@ namespace Application.Services
             return mapped;
         }
 
-        public async Task CreateClothing(ClothingCreateDto clothing)
+        public async Task<ClothingDto> CreateClothing(ClothingCreateDto clothing)
         {
             var mapped = _mapper.Map<Clothing>(clothing);
             await _clothingRepository.AddAsync(mapped);
+            return _mapper.Map<ClothingDto>(mapped);
         }
 
         public async Task<ClothingDto> GetById(int id)
