@@ -1,6 +1,6 @@
 using Application.Interfaces;
 using AutoMapper;
-using Core.Exceptions;
+using Core.Exceptions.Permission;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Web.Interfaces;

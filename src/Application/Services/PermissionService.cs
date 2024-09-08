@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces;
 using Core.Entities;
-using Core.Exceptions;
+using Core.Exceptions.Permission;
 using Core.Repositories.Base;
 using Core.Specifications;
 

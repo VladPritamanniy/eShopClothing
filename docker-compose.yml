@@ -10,6 +10,20 @@ services:
       - '5672:5672'
       # Web interface
       - '15672:15672'
+  clamav:
+    image: mkodockx/docker-clamav:alpine
+    container_name: clamav
+    ports:
+      - "3310:3310"
+    restart: unless-stopped
+    volumes:
+      - clam:/var/lib/clamav
+    healthcheck:
+      test: ["CMD", "./check.sh"]
+      interval: 60s
+      retries: 3
+      start_period: 120s
+    
   # web:
   #   build:
   #     context: .
@@ -41,5 +55,5 @@ services:
 #     volumes:
 #       - pgdata:/var/lib/postgresql/data
 
-# volumes:
-#   pgdata:
+volumes:
+  clam:

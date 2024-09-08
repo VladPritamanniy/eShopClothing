@@ -9,100 +9,37 @@ namespace Application.Services
 {
     public class FileService : IFileService
     {
-        private static readonly Dictionary<string, List<byte[]>> _fileSignature = new()
-        {
-            { ".jpg", new List<byte[]>
-                {
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xDB },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xEE },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE9 }
-                }
-            },
-            { ".jpeg", new List<byte[]>
-                {
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xDB },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xEE },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 },
-                    new byte[] { 0xFF, 0xD8, 0xFF, 0xE9 }
-                }
-            },
-            { ".png", new List<byte[]>
-                {
-                    new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }
-                }
-            }
-        };
+        private readonly ImageOptions imageOptions;
+        private readonly IClamAVService _clamAVService;
 
-        public ImageOptions Options { get; set; }
-
-        public FileService(IOptions<ImageOptions> options)
+        public FileService(IOptions<ImageOptions> imageOptions, IClamAVService clamAVService)
         {
-            Options = options.Value;
+            this.imageOptions = imageOptions.Value;
+            _clamAVService = clamAVService;
         }
 
         public async Task<ClothingCreateDto> UploadFiles(ClothingCreateDto clothingDto, List<IFormFile> files)
         {
+            await _clamAVService.AVCheck(files);
+
             foreach (var file in files)
             {
                 using var memoryStream = new MemoryStream();
-
                 await file.CopyToAsync(memoryStream);
-                if (memoryStream.Length > Options.MaxImageSizeInBytes)
+
+                if (memoryStream.Length > imageOptions.MaxImageSizeInBytes)
                 {
-                    throw new FileSizeException($"File size {file.FileName} is more then {Options.MaxImageSizeInBytes} bytes.");
+                    throw new FileSizeException($"File size {file.FileName} is more then {imageOptions.MaxImageSizeInBytes} bytes.");
                 }
 
-                CheckingFileFormatAndSignature(file.FileName, memoryStream);
                 var image = new ImageDto()
                 {
                     Value = memoryStream.ToArray()
                 };
                 clothingDto.Images.Add(image);
             }
+
             return clothingDto;
-        }
-
-        private void CheckingFileFormatAndSignature(string fileName, Stream data)
-        {
-            if (string.IsNullOrEmpty(fileName) || data == null || data.Length == 0)
-            {
-                throw new ArgumentNullException("CheckingImagesSignatures -> file name is null.");
-            }
-
-            var extensionFilePath = Path.GetExtension(fileName).ToLowerInvariant();
-
-            if (string.IsNullOrEmpty(extensionFilePath))
-            {
-                throw new FileFormatException($"An error while getting format this file - {extensionFilePath}.");
-            }
-
-            data.Position = 0;
-
-            using var reader = new BinaryReader(data);
-
-            if (!_fileSignature.ContainsKey(extensionFilePath))
-            {
-                throw new FileFormatException($"Unsupported file format - {extensionFilePath}.");
-            }
-
-            var signatures = _fileSignature[extensionFilePath];
-            var headerFileBytes = reader.ReadBytes(signatures.Max(m => m.Length));
-
-            bool isCorrectSignatures = signatures.Any(signature =>
-                headerFileBytes.Take(signature.Length).SequenceEqual(signature));
-            if (!isCorrectSignatures)
-            {
-                throw new FileSignatureException($"File has incorrect signature - {fileName}.");
-            }
         }
     }
 }

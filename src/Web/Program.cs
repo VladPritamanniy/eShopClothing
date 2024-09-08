@@ -48,6 +48,8 @@ namespace Web
                 //options.LowercaseQueryStrings = true;
             });
 
+            builder.Services.AddHttpClient();
+
             builder.Services.AddAutoMapper(typeof(ViewModelProfile));
             builder.Services.AddAutoMapper(typeof(DtoProfile));
             builder.Services.AddScoped<IClothingService, ClothingService>();
@@ -64,6 +66,7 @@ namespace Web
             builder.Services.AddScoped<IBasketPageService, BasketPageService>();
             builder.Services.AddScoped<IBasketService, BasketService>();
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+            builder.Services.AddScoped<IClamAVService, ClamAVService>();
             builder.Services.AddSingleton<IEmailNotificationService, EmailNotificationService>();
             builder.Services.AddHostedService<EmailNotificationService>(sp => (EmailNotificationService)sp.GetRequiredService<IEmailNotificationService>());
             //builder.Services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")));

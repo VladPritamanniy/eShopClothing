@@ -1,4 +1,4 @@
-using Core.Exceptions;
+using Core.Exceptions.Permission;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

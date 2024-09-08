@@ -1,3 +1,4 @@
+using Core.Exceptions.AV;
 using Core.Exceptions.File;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -59,6 +60,11 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
             catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
+            catch (InfectedFileException ex)
             {
                 _logger.LogError(ex.Message);
                 ModelState.AddModelError(string.Empty, ex.Message);
