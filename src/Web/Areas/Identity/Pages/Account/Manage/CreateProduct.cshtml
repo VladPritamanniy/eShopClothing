@@ -6,7 +6,7 @@
         <label asp-for="PageModel.Item.FormFiles" class="drop-container" id="dropcontainer">
             <span class="drop-title">Drop files here</span>
             or
-            <input asp-for="PageModel.Item.FormFiles" type="file" multiple accept="image/png, image/jpeg, image/jpg" id="fileInput">
+            <input asp-for="PageModel.Item.FormFiles" type="file" multiple accept="image/jpeg, image/png, image/gif, image/bmp, image/tiff, image/svg+xml, image/x-icon" id="fileInput">
         </label>
         <span asp-validation-for="PageModel.Item.FormFiles" class="text-danger"></span>
     </div>
