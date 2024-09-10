@@ -9,6 +9,6 @@ namespace Application.DTO
         public decimal OldPrice { get; set; }
         public DateTime CreationDate { get; set; }
         public string SizeName { get; set; }
-        public byte[] Image { get; set; }
+        public string ImagePublicId { get; set; }
     }
 }

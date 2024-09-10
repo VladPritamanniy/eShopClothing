@@ -13,7 +13,7 @@ namespace Application.Mapper
             CreateMap<Clothing, ClothingAccountDto>().ReverseMap();
             CreateMap<Clothing, ClothingCreateDto>().ReverseMap();
             CreateMap<Clothing, ClothingItemPageDto>()
-                .ForMember(d => d.Image, e => e.MapFrom(m => m.Images.FirstOrDefault()!.Value))
+                .ForMember(d => d.ImagePublicId, e => e.MapFrom(m => m.Images.FirstOrDefault()!.PublicId))
                 .ForMember(d => d.ValidPrice, e => e.MapFrom(m => m.ValidPrice))
                 .ForMember(d => d.OldPrice, e => e.MapFrom(m => m.OldPrice))
                 .ForMember(d => d.SizeName, e => e.MapFrom(m => m.Size.Name))
@@ -30,7 +30,7 @@ namespace Application.Mapper
                 .ForMember(d => d.Name, e => e.MapFrom(m => m.Clothing.Name))
                 .ForMember(d=>d.ValidPrice, e=>e.MapFrom(m=>m.Clothing.ValidPrice))
                 .ForMember(d => d.OldPrice, e => e.MapFrom(m => m.Clothing.OldPrice))
-                .ForMember(d => d.Image, e => e.MapFrom(m => m.Clothing.Images.FirstOrDefault()!.Value))
+                .ForMember(d => d.ImagePublicId, e => e.MapFrom(m => m.Clothing.Images.FirstOrDefault()!.PublicId))
                 .ForMember(d => d.SizeName, e => e.MapFrom(m => m.Clothing.Size.Name))
                 .ReverseMap();
         }

@@ -67,6 +67,7 @@ namespace Web
             builder.Services.AddScoped<IBasketService, BasketService>();
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
             builder.Services.AddScoped<IClamAVService, ClamAVService>();
+            builder.Services.AddSingleton<ICloudinaryService, CloudinaryService>();
             builder.Services.AddSingleton<IEmailNotificationService, EmailNotificationService>();
             builder.Services.AddHostedService<EmailNotificationService>(sp => (EmailNotificationService)sp.GetRequiredService<IEmailNotificationService>());
             //builder.Services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")));
@@ -75,6 +76,7 @@ namespace Web
             builder.Services.Configure<LoginOptions>(builder.Configuration.GetSection(nameof(LoginOptions)));
             builder.Services.Configure<ImageOptions>(builder.Configuration.GetSection(nameof(ImageOptions)));
             builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection(nameof(RabbitMqOptions)));
+            builder.Services.Configure<CloudinaryOptions>(builder.Configuration.GetSection(nameof(CloudinaryOptions)));
 
             var app = builder.Build();
             await app.Services.MigrateDatabaseAsync();

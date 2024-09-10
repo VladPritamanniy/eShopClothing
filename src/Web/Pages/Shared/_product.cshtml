@@ -1,9 +1,11 @@
 ﻿@model ClothingItemPageViewModel
-
+@{
+    string imgUrl = "https://res.cloudinary.com/dlytf9rwa/image/upload/c_scale,w_600/v1725876030/" + Model.ImagePublicId + ".jpg";
+}
 <form asp-page="/Basket/Index" class="home-item" method="post">
     <div class="home-item-container">
         <a class="home-item-img-container" asp-page="/Product/Index" asp-route-id="@Model.Id">
-            <img class="home-item-img" id="itemHomeMainPhoto" src="data:image/png;base64,@Convert.ToBase64String(Model.Image)" width="150" height="180"/>
+            <img class="home-item-img" id="itemHomeMainPhoto" src="@imgUrl" height="250" />
         </a>
         <div class="home-item-info-container">
             <div class="home-item-info">

@@ -11,11 +11,13 @@ namespace Application.Services
     {
         private readonly ImageOptions imageOptions;
         private readonly IClamAVService _clamAVService;
+        private readonly ICloudinaryService _cloudinaryService;
 
-        public FileService(IOptions<ImageOptions> imageOptions, IClamAVService clamAVService)
+        public FileService(IOptions<ImageOptions> imageOptions, IClamAVService clamAVService, ICloudinaryService cloudinaryService)
         {
             this.imageOptions = imageOptions.Value;
             _clamAVService = clamAVService;
+            _cloudinaryService = cloudinaryService;
         }
 
         public async Task<ClothingCreateDto> UploadFiles(ClothingCreateDto clothingDto, List<IFormFile> files)
@@ -32,9 +34,11 @@ namespace Application.Services
                     throw new FileSizeException($"File size {file.FileName} is more then {imageOptions.MaxImageSizeInBytes} bytes.");
                 }
 
+                memoryStream.Position = 0;
+                var imgUploadResult = await _cloudinaryService.UploadAsync(memoryStream);
                 var image = new ImageDto()
                 {
-                    Value = memoryStream.ToArray()
+                    PublicId = imgUploadResult.PublicId
                 };
                 clothingDto.Images.Add(image);
             }

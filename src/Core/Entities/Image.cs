@@ -4,7 +4,7 @@ namespace Core.Entities
 {
     public class Image : BaseEntity
     {
-        public byte[] Value { get; set; }
+        public string PublicId { get; set; }
         public int ClothingId { get; set; }
     }
 }

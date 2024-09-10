@@ -12,9 +12,10 @@
             </div>
             <div class="info">
                 <div class="images">
-                    @foreach (var stringImg in item.Images)
+                    @foreach (var publicId in item.Images)
                     {
-                        <img id="ItemPreview" src="data:image/png;base64,@Convert.ToBase64String(stringImg.Value)" width="65" height="80"/>
+                        string imgUrl = "https://res.cloudinary.com/dlytf9rwa/image/upload/c_scale,w_200/v1725876030/" + publicId.PublicId + ".jpg";
+                        <img id="ItemPreview" src="@imgUrl" height="80" />
                     }
                 </div>
                 <div class="price-section">
@@ -30,10 +31,7 @@
             <label><b>Product size: </b>@item.SizeName</label>
             <label><b>Creation date: </b>@item.CreationDate.ToShortDateString()</label>
             <div class="actions">
-                <form method="post" asp-page-handler="DeleteProduct">
-                    <input type="hidden" name="id" value="@item.Id"/>
-                    <input class="btn btn-danger" type="submit" value="Delete" />
-                </form>
+                <input class="btn btn-danger" type="button" value="Delete"/>
                 <a class="btn btn-secondary" asp-page="./ChangeProductPrice" asp-route-id="@item.Id">Change price</a>
             </div>
         </div>

@@ -5,8 +5,9 @@
     <h1>Basket</h1>
     @foreach (var item in @Model.PageModel.BasketItems)
     {
+        string imgUrl = "https://res.cloudinary.com/dlytf9rwa/image/upload/c_scale,w_300/v1725876030/" + item.ImagePublicId + ".jpg";
         <form method="post" class="basket-item">
-            <img class="home-item-img" id="itemHomeMainPhoto" src="data:image/png;base64,@Convert.ToBase64String(item.Image)" width="150" height="180"/>
+            <img class="home-item-img" id="itemHomeMainPhoto" src="@imgUrl" />
             <label>@item.Name</label>
             <input type="number" value="@item.Quantity"/>
             <div>

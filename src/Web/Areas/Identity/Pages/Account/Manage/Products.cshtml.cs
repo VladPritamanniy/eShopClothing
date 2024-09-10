@@ -39,16 +39,5 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             Items = _mapper.Map<IEnumerable<ClothingAccountViewModel>>(clothingDto);
             ReturnUrl = returnUrl;
         }
-
-        public async Task<IActionResult> OnPost(string returnUrl = null)
-        {
-            returnUrl ??= Url.RouteUrl(string.Empty);
-            return LocalRedirect(returnUrl);
-        }
-
-        public async Task<IActionResult> OnPostDeleteProduct(int? id)
-        {
-            return LocalRedirect("/");
-        }
     }
 }
