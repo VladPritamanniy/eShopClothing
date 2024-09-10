@@ -14,7 +14,7 @@
                 <div class="images">
                     @foreach (var publicId in item.Images)
                     {
-                        string imgUrl = "https://res.cloudinary.com/dlytf9rwa/image/upload/c_scale,w_200/v1725876030/" + publicId.PublicId + ".jpg";
+                        string imgUrl = "https://res.cloudinary.com/dlytf9rwa/image/upload/v1725876030/" + publicId.PublicId + ".jpg";
                         <img id="ItemPreview" src="@imgUrl" height="80" />
                     }
                 </div>

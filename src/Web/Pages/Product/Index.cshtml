@@ -8,7 +8,7 @@
                 <div class="swiper-wrapper">
                     @foreach (var publicId in Model.PageModel.Item.Images)
                     {
-                        string imgUrl = "https://res.cloudinary.com/dlytf9rwa/image/upload/ar_1:1,c_pad,dn_50,w_2000/v1725876030/" + publicId.PublicId + ".jpg";
+                        string imgUrl = "https://res.cloudinary.com/dlytf9rwa/image/upload/v1725876030/" + publicId.PublicId + ".jpg";
                         <div class="swiper-slide">
                             <img src="@imgUrl" height="450">
                         </div>
