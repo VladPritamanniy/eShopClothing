@@ -66,10 +66,12 @@ namespace Web
             builder.Services.AddScoped<IBasketPageService, BasketPageService>();
             builder.Services.AddScoped<IBasketService, BasketService>();
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
-            builder.Services.AddScoped<IClamAVService, ClamAVService>();
+            builder.Services.AddSingleton<IClamAVService, ClamAVService>();
             builder.Services.AddSingleton<ICloudinaryService, CloudinaryService>();
             builder.Services.AddSingleton<IEmailNotificationService, EmailNotificationService>();
+            builder.Services.AddSingleton<IElasticService, ElasticService>();
             builder.Services.AddHostedService<EmailNotificationService>(sp => (EmailNotificationService)sp.GetRequiredService<IEmailNotificationService>());
+            builder.Services.AddHostedService<ElasticService>(sp => (ElasticService)sp.GetRequiredService<IElasticService>());
             //builder.Services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")));
 
             builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection(nameof(AuthMessageSenderOptions)));

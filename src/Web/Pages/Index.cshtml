@@ -3,12 +3,21 @@
 
 <section class="catalog-hero">
     <div class="container">
-        <img class="img-banner" src="~/img/main_banner_text.png" />
+        <img class="img-banner" src="~/img/main_banner_text.png" /> 
     </div>
 </section>
 
 <div class="container">
     <div class="main-page-container">
+        <div class="searching-area">
+            <form method="get">
+                <input type="text" class="search-input" name="searchString" id="searchInput" placeholder="Search products..." oninput="getSuggestions()" autocomplete="off" asp-for="PageModel.SearchString"/>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+            <ul id="suggestions" class="search-results"></ul>
+        </div>
+
         <div class="page-navigation">
 
             @await Component.InvokeAsync("Basket")
@@ -45,3 +54,17 @@
 </div>
 
 <partial name="_alert"/>
+
+<script>
+    function getSuggestions() {
+        search.getSuggestions();
+    }
+
+    function createUl(suggestions) {
+        search.createUl(suggestions);
+    }
+
+    function selectSuggest(suggestedName) {
+        search.selectSuggest(suggestedName);
+    }
+</script>

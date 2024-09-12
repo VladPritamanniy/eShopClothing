@@ -10,6 +10,7 @@ services:
       - '5672:5672'
       # Web interface
       - '15672:15672'
+
   clamav:
     image: mkodockx/docker-clamav:alpine
     container_name: clamav
@@ -23,7 +24,41 @@ services:
       interval: 60s
       retries: 3
       start_period: 120s
-    
+
+  elasticsearch:
+    container_name: elk
+    image: elasticsearch:8.15.0
+    ports:
+    - "9200:9200"
+    volumes:
+    - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+    - discovery.type=single-node
+    - xpack.security.enabled=false
+    networks:
+    - elk
+
+  kibana:
+    container_name: kibana
+    image: kibana:8.15.0
+    ports:
+    - "5601:5601"
+    depends_on:
+    - elasticsearch
+    environment:
+    - ELASTICSEARCH_URL=http://elasticsearch:9200
+    networks:
+    - elk
+
+networks:
+  elk:
+    driver: bridge  
+
+volumes:
+  clam:
+  elasticsearch-data:
+
+
   # web:
   #   build:
   #     context: .
@@ -54,6 +89,3 @@ services:
 #       - "5432:5432"
 #     volumes:
 #       - pgdata:/var/lib/postgresql/data
-
-volumes:
-  clam:

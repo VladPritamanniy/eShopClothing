@@ -9,6 +9,7 @@ namespace Web.ViewModels
         public List<SelectListItem>? Types { get; set; } = new List<SelectListItem>();
         public int? SizeFilterApplied { get; set; }
         public int? TypeFilterApplied { get; set; }
+        public string? SearchString { get; set; }
         public PaginationInfoViewModel? PaginationInfo { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace Web.Services
         private readonly IFileService _fileService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ISubscriptionService _subscriptionService;
+        private readonly IElasticService _elasticService;
 
         public ImageOptions Options { get; set; }
 
@@ -31,7 +32,8 @@ namespace Web.Services
             IClothingService clothingService, 
             IFileService fileService, 
             UserManager<ApplicationUser> userManager,
-            ISubscriptionService subscriptionService)
+            ISubscriptionService subscriptionService,
+            IElasticService elasticService)
         {
             _mapper = mapper;
             _sizeService = sizeService;
@@ -41,6 +43,7 @@ namespace Web.Services
             _fileService = fileService;
             _userManager = userManager;
             _subscriptionService = subscriptionService;
+            _elasticService = elasticService;
         }
 
         public async Task CreateProductAndNotifySubscribers(ClothingItemCreateViewModel product, ClaimsPrincipal claims)
@@ -54,6 +57,8 @@ namespace Web.Services
 
             var dto = await _fileService.UploadFiles(mapped, product.FormFiles);
             var created = await _clothingService.CreateClothing(dto);
+
+            await _elasticService.IndexDocument(created);
 
             await _subscriptionService.NotifySubscribers(created);
         }

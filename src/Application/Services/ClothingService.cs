@@ -63,7 +63,9 @@ namespace Application.Services
                 paginationFilterDto.PageNum,
                 paginationFilterDto.PageSize,
                 paginationFilterDto.TypeId,
-                paginationFilterDto.SizeId);
+                paginationFilterDto.SizeId,
+                paginationFilterDto.IdsArray,
+                paginationFilterDto.IsEnableSearching);
 
             var entities = await _clothingRepository.ToListAsync(specification);
             var mapped = _mapper.Map<IEnumerable<ClothingItemPageDto>>(entities);
